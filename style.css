@@ -1,0 +1,47 @@
+html {
+    scroll-behavior: smooth;
+}
+body {
+    margin: 0;
+    padding-bottom: 0;
+}
+
+.bg-primary {
+    background-color: rgb(61, 117, 255);
+}
+
+.navbar-dark {
+    background-color: rgb(61, 117, 255);
+}
+
+.navbar-nav {
+    float:none;
+    margin:0 auto;
+    display: block;
+    text-align: center;
+}
+
+.navbar-nav > li {
+    display: inline-block;
+    float:none;
+}
+
+.jumbotron{
+    padding-top: 100px;
+    height: 500px;
+    background-color: #F4F5F7;
+    margin-bottom: -26px;
+    
+}
+
+.jumbotron-features {
+    padding-top: 1%;
+    margin-top: -0.8%;
+    height: 500px;
+    background-color:rgb(61, 117, 255) ;
+    color: #ffffff;
+}
+
+.img-cloud {
+    margin-right: 2%;
+}
