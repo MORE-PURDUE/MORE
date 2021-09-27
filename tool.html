@@ -18,6 +18,22 @@
         integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
         crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="//unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="//unpkg.com/bootstrap-select@1.12.4/dist/css/bootstrap-select.min.css"
+        type="text/css" />
+    <link rel="stylesheet" href="//unpkg.com/bootstrap-select-country@4.0.0/dist/css/bootstrap-select-country.min.css"
+        type="text/css" />
+
+    <script src="//unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="//unpkg.com/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <script src="//unpkg.com/bootstrap-select@1.12.4/dist/js/bootstrap-select.min.js"></script>
+    <script src="//unpkg.com/bootstrap-select-country@4.0.0/dist/js/bootstrap-select-country.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.css"
+        integrity="sha512-SZgE3m1he0aEF3tIxxnz/3mXu/u/wlMNxQSnE0Cni9j/O8Gs+TjM9tm1NX34nRQ7GiLwUEzwuE3Wv2FLz2667w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Customized CSS-->
     <link rel="stylesheet" href="style.css">
 
@@ -46,7 +62,201 @@
         </div>
     </nav>
 
-    <h1 class="text-center">Try Our Tool Below to Optimize your Costs</h1>
+    <h3 class="text-center">Fill out your cloud storage requirements below to optimize your cloud costs</h3>
+    <br>
+    <br>
+
+    <form class="justify-content-center">
+        <div class="justify-content-center">
+            <div class="form-group row text-right justify-content-center">
+                <label for="inputEmail3" style="width:20%; font-size: 1.1em" class="col-sm-2 col-form-label">Location of
+                    Customers: </label>
+                <div class="col-sm-4 text-left">
+                    <select class="selectpicker countrypicker" data-flag="true" multiple></select>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center">
+                <div class="col-sm-2 text-right" style="width:20%; font-size: 1.1em; font-weight: bold;">Storage Type:
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck1">
+                        <label class="form-check-label" for="gridCheck1" style="font-weight: 400 !important;">
+                            Blob Storage
+                        </label>
+                        <input type="text" id="blob" style="margin-left: 1em; border-width: 0.2px"
+                            placeholder="size: e.g. 2.2"> TB
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck2">
+                        <label class="form-check-label" id="file" for="gridCheck2" style="font-weight: 400 !important;">
+                            File Storage
+                        </label>
+                        <input type="text" style="margin-left: 1em; border-width: 0.2px" placeholder="size: e.g. 3.3">
+                        TB
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck3">
+                        <label class="form-check-label" for="gridCheck3" style="font-weight: 400 !important;">
+                            Block Storage
+                        </label>
+                        <input type="text" id="block" style="margin-left: 1em; border-width: 0.2px"
+                            placeholder="size: e.g. 4.4"> TB
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center">
+                <div class="col-sm-2 text-right" style="width:20%; font-size: 1.1em; font-weight: bold;">Data
+                    Replication:
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck1">
+                        <label class="form-check-label" for="gridCheck1" style="font-weight: 400 !important;">
+                            None
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck2">
+                        <label class="form-check-label" id="file" for="gridCheck2" style="font-weight: 400 !important;">
+                            Across Availability Zones
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck3">
+                        <label class="form-check-label" for="gridCheck3" style="font-weight: 400 !important;">
+                            Cross-Region
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example single danger button -->
+            <div class="form-group row justify-content-center">
+
+                <div class="btn-group text-center" style="margin-left: -10em;">
+                    <!-- <button type="button" class="bt n btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                Retrieval Frequency
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Every day</a>
+                <a class="dropdown-item" href="#">Once a week</a>
+                <a class="dropdown-item" href="#">Once a month</a>
+                <a class="dropdown-item" href="#">Once a quarter</a>
+                <a class="dropdown-item" href="#">Once a year</a> -->
+                    <!-- </div> -->
+                    <label for="" style="width:20%; font-size: 1.1em; margin-left: -2em;" class="text-right">Storage
+                        Access: </label>
+                    <select class="custom-select mr-sm-2 "
+                        style="margin-top: 0.3em; margin-left: 1em; border-color: lightgray; border-radius: 3px; width: 15em; height: 2em; margin-bottom: 1em;"
+                        id="inlineFormCustomSelect">
+                        <option selected>Retrieval Frequency</option>
+                        <option value="day">Once a day</option>
+                        <option value="week">Once a week</option>
+                        <option value="month">Once a month</option>
+                        <option value="quarter">Once a quarter</option>
+                        <option value="year">Once a year</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center">
+                <div class="col-sm-2 text-right" style="width:20%; font-size: 1.1em; font-weight: bold;">Databases:
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck1">
+                        <label class="form-check-label" for="gridCheck1" style="font-weight: 400 !important;">
+                            Relational (e.g. MySQL, PostgreSQL, MariaDB)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck2">
+                        <label class="form-check-label" id="file" for="gridCheck2" style="font-weight: 400 !important;">
+                            NoSQL (e.g. MongoDB)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck3">
+                        <label class="form-check-label" for="gridCheck3" style="font-weight: 400 !important;">
+                            In-Memory (e.g. Redis, Cache)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck4">
+                        <label class="form-check-label" for="gridCheck4" style="font-weight: 400 !important;">
+                            Big-Data Clusters (e.g. Apache Spark/Hadoop)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center">
+                <div class="col-sm-2 text-right" style="width:20%; font-size: 1.1em; font-weight: bold;">
+                    Annual Budget:
+                </div>
+                <div class="col-sm-4">
+                    <input id="ex13" type="text" data-slider-ticks="[10000, 40000, 80000, 120000, 150000]"
+                        data-slider-ticks-snap-bounds="40"
+                        data-slider-ticks-labels='["$10,000", "$40,000", "$80,000", "$120,000", ">$150,000"]' />
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center">
+                <div class="col-sm-2 text-right" style="width:20%; font-size: 1.1em; font-weight: bold;">
+                    Importance of Latency: <br>(0 low, 10 high)
+                </div>
+                <div class="col-sm-4">
+                    <input id="ex9" type="text" />
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center">
+                <div class="col-sm-2 text-right" style="width:20%; font-size: 1.1em; font-weight: bold;">
+                    Importance of Cost: <br>(0 low, 10 high)
+                </div>
+                <div class="col-sm-4">
+                    <input id="ex10" type="text" />
+                </div>
+            </div>
+
+            <div class="form-group row text-center justify-content-center" style="margin-top: 2em;">
+                <div class="col-sm-6">
+                    <button class="btn btn-primary" style="background-color: #456EFD;" type="submit">Calculate My
+                        Recommendations</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+
+    <script>
+        $('.countrypicker').countrypicker();
+
+        // With JQuery
+        $("#ex13").slider({
+            ticks: [10000, 40000, 80000, 120000, 150000],
+            ticks_labels: ['$<10K', '$40K', '$80K', '$120K', '$>150K'],
+            ticks_snap_bounds: 40
+        });
+
+        // With JQuery
+        $("#ex9").slider({
+            precision: 2,
+            value: 8.115 // Slider will instantiate showing 8.12 due to specified precision
+        });
+
+        // With JQuery
+        $("#ex10").slider({
+            precision: 2,
+            value: 8.115 // Slider will instantiate showing 8.12 due to specified precision
+        });
+    </script>
 </body>
 
 </html>
