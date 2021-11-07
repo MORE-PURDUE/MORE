@@ -103,11 +103,11 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck1">
+                        <input class="form-check-input" type="checkbox" id="gridCheck1" >
                         <label class="form-check-label" for="gridCheck1" style="font-weight: 400 !important;">
                             Blob Storage
                         </label>
-                        <input type="text" id="blob" style="margin-left: 1em; border-width: 0.2px"
+                        <input id="blobValue" type="text" style="margin-left: 1em; border-width: 0.2px"
                             placeholder="size: e.g. 2.2"> TB
                     </div>
                     <div class="form-check">
@@ -115,7 +115,7 @@
                         <label class="form-check-label" id="file" for="gridCheck2" style="font-weight: 400 !important;">
                             File Storage
                         </label>
-                        <input type="text" style="margin-left: 1em; border-width: 0.2px" placeholder="size: e.g. 3.3">
+                        <input id="fileValue" type="text" style="margin-left: 1em; border-width: 0.2px" placeholder="size: e.g. 3.3">
                         TB
                     </div>
                     <div class="form-check">
@@ -123,7 +123,7 @@
                         <label class="form-check-label" for="gridCheck3" style="font-weight: 400 !important;">
                             Block Storage
                         </label>
-                        <input type="text" id="block" style="margin-left: 1em; border-width: 0.2px"
+                        <input id="blockValue" type="text" style="margin-left: 1em; border-width: 0.2px"
                             placeholder="size: e.g. 4.4"> TB
                     </div>
                 </div>
@@ -135,20 +135,20 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                        <label class="form-check-label" for="gridCheck1" style="font-weight: 400 !important;">
+                        <input class="form-check-input" type="checkbox" id="gridCheck4">
+                        <label class="form-check-label" for="gridCheck4" style="font-weight: 400 !important;">
                             None
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck2">
-                        <label class="form-check-label" id="file" for="gridCheck2" style="font-weight: 400 !important;">
+                        <input class="form-check-input" type="checkbox" id="gridCheck5">
+                        <label class="form-check-label" id="file" for="gridCheck5" style="font-weight: 400 !important;">
                             Across Availability Zones
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck3">
-                        <label class="form-check-label" for="gridCheck3" style="font-weight: 400 !important;">
+                        <input class="form-check-input" type="checkbox" id="gridCheck6">
+                        <label class="form-check-label" for="gridCheck6" style="font-weight: 400 !important;">
                             Cross-Region
                         </label>
                     </div>
@@ -172,9 +172,9 @@
                     <!-- </div> -->
                     <label for="" style="width:20%; font-size: 1.1em; margin-left: -2em;" class="text-right">Storage
                         Access: </label>
-                    <select class="custom-select mr-sm-2 "
+                    <select id="storageAccess" class="custom-select mr-sm-2 "
                         style="margin-top: 0.3em; margin-left: 1em; border-color: lightgray; border-radius: 3px; width: 15em; height: 2em; margin-bottom: 1em;"
-                        id="inlineFormCustomSelect">
+                        >
                         <option selected>Retrieval Frequency</option>
                         <option value="day">Once a day</option>
                         <option value="week">Once a week</option>
@@ -190,26 +190,26 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                        <label class="form-check-label" for="gridCheck1" style="font-weight: 400 !important;">
+                        <input class="form-check-input" type="checkbox" id="gridCheck7">
+                        <label class="form-check-label" for="gridCheck7" style="font-weight: 400 !important;">
                             Relational (e.g. MySQL, PostgreSQL, MariaDB)
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck2">
-                        <label class="form-check-label" id="file" for="gridCheck2" style="font-weight: 400 !important;">
+                        <input class="form-check-input" type="checkbox" id="gridCheck8">
+                        <label class="form-check-label" id="file" for="gridCheck8" style="font-weight: 400 !important;">
                             NoSQL (e.g. MongoDB)
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck3">
-                        <label class="form-check-label" for="gridCheck3" style="font-weight: 400 !important;">
+                        <input class="form-check-input" type="checkbox" id="gridCheck9">
+                        <label class="form-check-label" for="gridCheck9" style="font-weight: 400 !important;">
                             In-Memory (e.g. Redis, Cache)
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck4">
-                        <label class="form-check-label" for="gridCheck4" style="font-weight: 400 !important;">
+                        <input class="form-check-input" type="checkbox" id="gridCheck10">
+                        <label class="form-check-label" for="gridCheck10" style="font-weight: 400 !important;">
                             Big-Data Clusters (e.g. Apache Spark/Hadoop)
                         </label>
                     </div>
@@ -247,7 +247,7 @@
 
             <div class="form-group row text-center justify-content-center" style="margin-top: 2em;">
                 <div class="col-sm-6">
-                    <button class="btn btn-primary" style="background-color: #456EFD;" type="submit">Calculate My
+                    <button onclick="recommendation()" class="btn btn-primary" style="background-color: #456EFD;" type="submit">Calculate My
                         Recommendations</button>
                 </div>
             </div>
@@ -301,6 +301,44 @@
 
         const pricingData = new Map();
         pricingData.set('Blob Storage', []);
+        
+        function recommendation () { 
+            var country = document.getElementById("country").value;
+
+            var blobCheck = document.getElementById("gridCheck1").checked;
+            var blobValue = document.getElementById("blobValue").value;
+
+            
+
+            var fileCheck = document.getElementById("gridCheck2").checked;
+            var fileValue = document.getElementById("fileValue").value;
+
+            var blockCheck = document.getElementById("gridCheck3").checked;
+            var blockValue = document.getElementById("blockValue").value;
+            
+
+            var replicationNone = document.getElementById("gridCheck4").checked;
+            var replicationAAZ = document.getElementById("gridCheck5").checked;
+            var replicationCR = document.getElementById("gridCheck6").checked;
+
+            var storageAccess = document.getElementById("storageAccess").value;
+
+            var relationalDB = document.getElementById("gridCheck7").checked;
+            var noSQLDB = document.getElementById("gridCheck8").checked;
+            var inMemoryDB = document.getElementById("gridCheck9").checked;
+            var bigDataClusterDB = document.getElementById("gridCheck10").checked;
+            console.log("db check " + relationalDB);
+            console.log("db check " + noSQLDB);
+
+            var annualBudget = document.getElementById("ex13").value;
+
+            var latencyImportant = document.getElementById("ex9").value;
+
+            var costImportant = document.getElementById("ex10").value;            
+
+        }
+        
+
     </script>
 </body>
 
