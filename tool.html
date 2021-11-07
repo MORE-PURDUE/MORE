@@ -69,11 +69,33 @@
     <form class="justify-content-center">
         <div class="justify-content-center">
             <div class="form-group row text-right justify-content-center">
-                <label for="inputEmail3" style="width:20%; font-size: 1.1em" class="col-sm-2 col-form-label">Location of
+
+                <label for="country" style="width:30%; margin-left: 10%; font-size: 1.1em"
+                    class="col-sm-2 col-form-label text-right justify-content-right">Location of
                     Customers: </label>
-                <div class="col-sm-4 text-left">
-                    <select class="selectpicker countrypicker" data-flag="true" multiple></select>
-                </div>
+                <select name="country" id="country" default="choose country" class="text-left"
+                    style="width: 20%; margin-right: 30%; height: 10%" id="cars">
+                    <option value="none" selected>Customer Location</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Brazil">Brazil</option>
+                    <option value="Canada">Canada</option>
+                    <option value="China">China</option>
+                    <option value="France">France</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Hong_Kong">Hong Kong</option>
+                    <option value="India">India</option>
+                    <option value="Ireland">Ireland</option>
+                    <option value="Italy">Italy</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Mexico">Mexico</option>
+                    <option value="Singapore">Singapore</option>
+                    <option value="South Korea">South Korea</option>
+                    <option value="Spain">Spain</option>
+                    <option value="Taiwan">Taiwan</option>
+                    <option value="United_Kingdom">United Kingdom</option>
+                    <option value="United_States">United States</option>
+                </select>
+
             </div>
 
             <div class="form-group row justify-content-center">
@@ -256,6 +278,29 @@
             precision: 2,
             value: 8.115 // Slider will instantiate showing 8.12 due to specified precision
         });
+
+        const latencyData = new Map();
+        latencyData.set('Australia', [15.61, 'ap-southeast-2', 14.11, 'australiaeast', 14.41, 'australia-southeast1']);
+        latencyData.set('Brazil', [5.15, 'sa-east-1', 16.67, 'brazilsouth', 2.01, 'southamerica-east1']);
+        latencyData.set('Canada', [9.31, 'ca-central1', 21.1, 'eastus', 8.53, 'northamerica-northeast1']);
+        latencyData.set('China', [156.73, 'us-west-1', 33.13, 'eastasia', 43.54, 'asia-east1']);
+        latencyData.set('France', [4.54, 'eu-west-3', 6.15, 'francecentral', 9.54, 'europe-west1']);
+        latencyData.set('Germany', [4.89, 'eu-central-1', 16.08, 'westeurope', 6.04, 'europe-west3']);
+        latencyData.set('Hong Kong', [36.8, 'ap-southeast-1', 3.99, 'eastasia', 14.63, 'asia-east1']);
+        latencyData.set('India', [28.7, 'ap-south-1', 100, '', 29.71, 'asia-south1']);
+        latencyData.set('Ireland', [11.66, 'eu-west-1', 6.08, 'northeurope', 14.95, 'europe-west2']);
+        latencyData.set('Italy', [18.96, 'eu-central-1', 21.68, 'westeurope', 15.96, 'europe-west3']);
+        latencyData.set('Japan', [6.21, 'ap-northeast-1', 2.7, 'japaneast', 3.24, 'asia-northeast1']);
+        latencyData.set('Mexico', [64.61, 'us-west-1', 47.12, 'southcentralus', 76.52, 'us-west1']);
+        latencyData.set('Singapore', [2.22, 'ap-southeast-1', 3.28, 'southeastasia', 2.57, 'asia-southeast1']);
+        latencyData.set('South Korea', [1.88, 'ap-northeast-2', 3.01, 'koreacentral', 35.02, 'asia-northeast1']);
+        latencyData.set('Spain', [21.2, 'eu-west-3', 24.9, 'francecentral', 22.14, 'europe-west1']);
+        latencyData.set('Taiwan', [41.09, 'ap-northeast-1', 33.29, 'japaneast', 34.33, 'asia-northeast1']);
+        latencyData.set('United Kingdom', [7.11, 'eu-west-2', 10.82, 'ukwest', 5.79, 'europe-west2']);
+        latencyData.set('United States', [40.47, 'us-east-1', 36.94, 'southcentralus', 30.04, 'us-central1']);
+
+        const pricingData = new Map();
+        pricingData.set('Blob Storage', []);
     </script>
 </body>
 
