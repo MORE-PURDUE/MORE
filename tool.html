@@ -300,7 +300,19 @@
         latencyData.set('United States', [40.47, 'us-east-1', 36.94, 'southcentralus', 30.04, 'us-central1']);
 
         const pricingData = new Map();
-        pricingData.set('Blob Storage', []);
+        pricingData.set('Blob Storage', [264, 'S3 Standard', 216, 'Hot Tier Block Blob Storage', 312, 'Data Storage', 216, 'Azure (Hot Tier Block Blob Storage)']);
+        pricingData.set('File Storage', [1080, 'EFS Standard', 720, 'Transaction Optimized File Storage', 2400, 'Cloud Filestore', 720, 'Azure (Transaction Optimized File Storage)']);
+        // TODO: Azure does not have block storage --> Say not applicable for Azure only recommendation
+        pricingData.set('Block Storage', [960, 'EBS General Purpose SSD', 0.0, 'No Block Storage Service', 480, 'Persistent Disk', 480, 'GCP (Persistent Disk)']);
+        pricingData.set('Data Replication', [15, 'S3 Replication', 16, 'Site Recovery', 0.0, 'Cannot Replicate Data', 16, 'Azure (Site Recovery)']);
+        pricingData.set('Storage Access', [5.4, 'S3 Data Retrievals', 5, 'Blob Data Retrieval', 0, 'Standard Data Retrieval', 5, 'Blob Data Retrieval']);
+        pricingData.set('Relational DB', [2162, 'RDS for MySQL', 1440, 'SQL Database', 2040, 'Cloud SQL', 1440, 'Azure (SQL Database)']);
+        pricingData.set('NoSQL DB', [3000, 'DynamoDB', 2978, 'Cosmos DB', 2160, 'Datastore', 2160, 'GCP (Datastore)']);
+        pricingData.set('In-Memory DB', [452, 'MemoryDB for Redis', 480, 'Cache for Redis', 588, 'Memorystore for Redis', 452, 'AWS (MemoryDB For Redis)']);
+
+        /* Big Data pricing is pricing per year. DON'T multiply by number of TB */
+        pricingData.set('Big Data Processing', [1691, 'EMR General Purpose', 1611.84, 'HDInsight', 1800, 'Dataflow', 1611.84, 'Azure (HDInsight)']);
+        console.log(latencyData);
         
         function recommendation () { 
             var country = document.getElementById("country").value;
@@ -308,15 +320,12 @@
             var blobCheck = document.getElementById("gridCheck1").checked;
             var blobValue = document.getElementById("blobValue").value;
 
-            
-
             var fileCheck = document.getElementById("gridCheck2").checked;
             var fileValue = document.getElementById("fileValue").value;
 
             var blockCheck = document.getElementById("gridCheck3").checked;
             var blockValue = document.getElementById("blockValue").value;
             
-
             var replicationNone = document.getElementById("gridCheck4").checked;
             var replicationAAZ = document.getElementById("gridCheck5").checked;
             var replicationCR = document.getElementById("gridCheck6").checked;
@@ -327,8 +336,6 @@
             var noSQLDB = document.getElementById("gridCheck8").checked;
             var inMemoryDB = document.getElementById("gridCheck9").checked;
             var bigDataClusterDB = document.getElementById("gridCheck10").checked;
-            console.log("db check " + relationalDB);
-            console.log("db check " + noSQLDB);
 
             var annualBudget = document.getElementById("ex13").value;
 
