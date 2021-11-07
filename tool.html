@@ -279,6 +279,7 @@
             value: 8.115 // Slider will instantiate showing 8.12 due to specified precision
         });
 
+
         const latencyData = new Map();
         latencyData.set('Australia', [15.61, 'ap-southeast-2', 14.11, 'australiaeast', 14.41, 'australia-southeast1']);
         latencyData.set('Brazil', [5.15, 'sa-east-1', 16.67, 'brazilsouth', 2.01, 'southamerica-east1']);
@@ -300,7 +301,19 @@
         latencyData.set('United States', [40.47, 'us-east-1', 36.94, 'southcentralus', 30.04, 'us-central1']);
 
         const pricingData = new Map();
-        pricingData.set('Blob Storage', []);
+        pricingData.set('Blob Storage', [264, 'S3 Standard', 216, 'Hot Tier Block Blob Storage', 312, 'Data Storage', 216, 'Azure (Hot Tier Block Blob Storage)']);
+        pricingData.set('File Storage', [1080, 'EFS Standard', 720, 'Transaction Optimized File Storage', 2400, 'Cloud Filestore', 720, 'Azure (Transaction Optimized File Storage)']);
+        // TODO: Azure does not have block storage --> Say not applicable for Azure only recommendation
+        pricingData.set('Block Storage', [960, 'EBS General Purpose SSD', 0.0, 'No Block Storage Service', 480, 'Persistent Disk', 480, 'GCP (Persistent Disk)']);
+        pricingData.set('Data Replication', [15, 'S3 Replication', 16, 'Site Recovery', 0.0, 'Cannot Replicate Data', 16, 'Azure (Site Recovery)']);
+        pricingData.set('Storage Access', [5.4, 'S3 Data Retrievals', 5, 'Blob Data Retrieval', 0, 'Standard Data Retrieval', 5, 'Blob Data Retrieval']);
+        pricingData.set('Relational DB', [2162, 'RDS for MySQL', 1440, 'SQL Database', 2040, 'Cloud SQL', 1440, 'Azure (SQL Database)']);
+        pricingData.set('NoSQL DB', [3000, 'DynamoDB', 2978, 'Cosmos DB', 2160, 'Datastore', 2160, 'GCP (Datastore)']);
+        pricingData.set('In-Memory DB', [452, 'MemoryDB for Redis', 480, 'Cache for Redis', 588, 'Memorystore for Redis', 452, 'AWS (MemoryDB For Redis)']);
+
+        /* Big Data pricing is pricing per year. DON'T multiply by number of TB */
+        pricingData.set('Big Data Processing', [1691, 'EMR General Purpose', 1611.84, 'HDInsight', 1800, 'Dataflow', 1611.84, 'Azure (HDInsight)']);
+        console.log(latencyData);
     </script>
 </body>
 
