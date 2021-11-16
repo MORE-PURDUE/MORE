@@ -247,7 +247,7 @@
 
             <div class="form-group row text-center justify-content-center" style="margin-top: 2em;">
                 <div class="col-sm-6">
-                    <button onclick="recommendation()" class="btn btn-primary" style="background-color: #456EFD;" type="submit">Calculate My
+                    <button onclick="bestRecommendation()" class="btn btn-primary" style="background-color: #456EFD;" type="submit">Calculate My
                         Recommendations</button>
                 </div>
             </div>
@@ -313,8 +313,13 @@
         /* Big Data pricing is pricing per year. DON'T multiply by number of TB */
         pricingData.set('Big Data Processing', [1691, 'EMR General Purpose', 1611.84, 'HDInsight', 1800, 'Dataflow', 1611.84, 'Azure (HDInsight)']);
         console.log(latencyData);
+
+        var AWSprice = 0;
+        var GCPprice = 0;
+        var AZUREprice = 0;
+        var MULTIprice = 0;
         
-        function recommendation () { 
+        function bestRecommendation () { 
             var country = document.getElementById("country").value;
 
             var blobCheck = document.getElementById("gridCheck1").checked;
@@ -341,10 +346,143 @@
 
             var latencyImportant = document.getElementById("ex9").value;
 
-            var costImportant = document.getElementById("ex10").value;            
+            var costImportant = document.getElementById("ex10").value;
 
+            var totalTB = 0;
+
+            if (blobCheck) {
+                AWSprice += (blobValue * pricingData.get("Blob Storage")[0]);
+                AZUREprice += (blobValue * pricingData.get("Blob Storage")[2]);
+                GCPprice += (blobValue * pricingData.get("Blob Storage")[4]);
+                MULTIprice += (Math.min((blobValue * pricingData.get("Blob Storage")[0]), (blobValue * pricingData.get("Blob Storage")[2]), (blobValue * pricingData.get("Blob Storage")[4])));
+                totalTB += blobValue;
+            }
+            if (fileCheck) {
+                AWSprice += (fileValue * pricingData.get("File Storage")[0]);
+                AZUREprice += (fileValue * pricingData.get("File Storage")[2]);
+                GCPprice += (fileValue * pricingData.get("File Storage")[4]);
+                MULTIprice += (Math.min((fileValue * pricingData.get("File Storage")[0]), (fileValue * pricingData.get("File Storage")[2]), (fileValue * pricingData.get("File Storage")[4])));
+                totalTB += fileValue;
+            }
+            if (blockCheck) {
+                AWSprice += (blockValue * pricingData.get("Block Storage")[0]);
+                AZUREprice += (blockValue * pricingData.get("Block Storage")[2]);
+                GCPprice += (blockValue * pricingData.get("Block Storage")[4]);
+                MULTIprice += (Math.min((blockValue * pricingData.get("Block Storage")[0]), (blockValue * pricingData.get("Block Storage")[2]), (blockValue * pricingData.get("Block Storage")[4])));
+                totalTB += blockValue;
+            }
+
+            /* TODO: For TB value, just currently adding all TB storage, that should be fine right? */
+            /* TODO: For replication, what prices to use for different options? Currently using same price for both */
+
+            if (replicationAAZ) { /* USING SAME pricing valye for AAZ and CR */
+                AWSprice += (totalTB * pricingData.get("Data Replication")[0]);
+                AZUREprice += (totalTB * pricingData.get("Data Replication")[2]);
+                GCPprice += (totalTB * pricingData.get("Data Replication")[4]);
+                MULTIprice += (Math.min((totalTB * pricingData.get("Data Replication")[0]), (totalTB * pricingData.get("Data Replication")[2]), (totalTB * pricingData.get("Data Replication")[4])));
+            } 
+            else { // replicationCR
+                AWSprice += (totalTB * pricingData.get("Data Replication")[0]);
+                AZUREprice += (totalTB * pricingData.get("Data Replication")[2]);
+                GCPprice += (totalTB * pricingData.get("Data Replication")[4]);
+                MULTIprice += (Math.min((totalTB * pricingData.get("Data Replication")[0]), (totalTB * pricingData.get("Data Replication")[2]), (totalTB * pricingData.get("Data Replication")[4])));
+            }
+
+            if (storageAccess === "Once a day") {
+                AWSprice += ((totalTB * pricingData.get("Storage Access")[0]) / 365);
+                AZUREprice += ((totalTB * pricingData.get("Storage Access")[2]) / 365);
+                GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 365);
+                MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 365), ((totalTB * pricingData.get("Storage Access")[2]) / 365), ((totalTB * pricingData.get("Storage Access")[4]) / 365)));
+            } 
+            else if (storageAccess === "Once a week") {
+                AWSprice += ((totalTB * pricingData.get("Storage Access")[0]) / 52);
+                AZUREprice += ((totalTB * pricingData.get("Storage Access")[2]) / 52);
+                GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 52);
+                MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 52), ((totalTB * pricingData.get("Storage Access")[2]) / 52), ((totalTB * pricingData.get("Storage Access")[4]) / 52)));
+            }
+            else if (storageAccess === "Once a month") {
+                AWSprice += ((totalTB * pricingData.get("Storage Access")[0]) / 12);
+                AZUREprice += ((totalTB * pricingData.get("Storage Access")[2]) / 12);
+                GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 12);
+                MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 12), ((totalTB * pricingData.get("Storage Access")[2]) / 12), ((totalTB * pricingData.get("Storage Access")[4]) / 12)));
+            }
+            else if (storageAccess === "Once a quarter") {
+                AWSprice += ((totalTB * pricingData.get("Storage Access")[0]) / 4);
+                AZUREprice += ((totalTB * pricingData.get("Storage Access")[2]) / 4);
+                GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 4);
+                MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 4), ((totalTB * pricingData.get("Storage Access")[2]) / 4), ((totalTB * pricingData.get("Storage Access")[4]) / 4)));
+            }
+            else { // Once a year
+                AWSprice += (totalTB * pricingData.get("Storage Access")[0]);
+                AZUREprice += (totalTB * pricingData.get("Storage Access")[2]);
+                GCPprice += (totalTB * pricingData.get("Storage Access")[4]);
+                MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0])), ((totalTB * pricingData.get("Storage Access")[2])), ((totalTB * pricingData.get("Storage Access")[4]))));
+            }
+
+            if (relationalDB) {
+                AWSprice += (totalTB * pricingData.get("Relational DB")[0]);
+                AZUREprice += (totalTB * pricingData.get("Relational DB")[2]);
+                GCPprice += (totalTB * pricingData.get("Relational DB")[4]);
+                MULTIprice += (Math.min((totalTB * pricingData.get("Relational DB")[0]), (totalTB * pricingData.get("Relational DB")[2]), (totalTB * pricingData.get("Relational DB")[4])));
+            } 
+            if (noSQLDB) {
+                AWSprice += (totalTB * pricingData.get("NoSQL DB")[0]);
+                AZUREprice += (totalTB * pricingData.get("NoSQL DB")[2]);
+                GCPprice += (totalTB * pricingData.get("NoSQL DB")[4]);
+                MULTIprice += (Math.min((totalTB * pricingData.get("NoSQL DB")[0]), (totalTB * pricingData.get("NoSQL DB")[2]), (totalTB * pricingData.get("NoSQL DB")[4])));
+            }
+            if (inMemoryDB) {
+                AWSprice += (totalTB * pricingData.get("In-Memory DB")[0]);
+                AZUREprice += (totalTB * pricingData.get("In-Memory DB")[2]);
+                GCPprice += (totalTB * pricingData.get("In-Memory DB")[4]);
+                MULTIprice += (Math.min((totalTB * pricingData.get("In-Memory DB")[0]), (totalTB * pricingData.get("In-Memory DB")[2]), (totalTB * pricingData.get("In-Memory DB")[4])));
+            }
+            if (bigDataClusterDB) {
+                AWSprice += (pricingData.get("Big Data Processing")[0]);
+                AZUREprice += (pricingData.get("Big Data Processing")[2]);
+                GCPprice += (pricingData.get("Big Data Processing")[4]);
+                MULTIprice += (Math.min((pricingData.get("Big Data Processing")[0]), (pricingData.get("Big Data Processing")[2]), (pricingData.get("Big Data Processing")[4])));
+            }
+
+            if (latencyImportant >= costImportant) {
+                var leastLatency = Math.min(latencyData.get(country)[0], latencyData.get(country)[2], latencyData.get(country)[4]);
+                if (leastLatency === latencyData.get(country)[0]) { // AWS
+                    console.log("AWS Price = " + AWSprice);
+                    return AWSprice;
+                } 
+                else if (leastLatency === latencyData.get(country)[2]) { // Azure
+                    console.log("Azure Price = " + AZUREprice);
+                    return AZUREprice;
+                } 
+                else { // GCP
+                    console.log("GCP Price = " + GCPprice);
+                    return GCPprice;
+                }
+            } 
+            else {
+                return Math.min(AWSprice, AZUREprice, GCPprice, MULTIprice);
+            }        
         }
-        
+
+        function multiPrice () {
+            console.log("Mutli-Cloud Price = " + MULTIprice);
+            return MULTIprice;
+        }
+
+        function awsPrice () {
+            console.log("AWS Price = " + AWSprice);
+            return AWSprice;
+        }
+
+        function azurePrice () {
+            console.log("Azure Price = " + AZUREprice);
+            return AZUREprice;
+        }
+
+        function gcpPrice () {
+            console.log("GCP Price = " + GCPprice);
+            return GCPprice;
+        }
 
     </script>
 </body>
