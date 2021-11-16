@@ -103,7 +103,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck1" >
+                        <input class="form-check-input" type="checkbox" id="gridCheck1">
                         <label class="form-check-label" for="gridCheck1" style="font-weight: 400 !important;">
                             Blob Storage
                         </label>
@@ -115,7 +115,8 @@
                         <label class="form-check-label" id="file" for="gridCheck2" style="font-weight: 400 !important;">
                             File Storage
                         </label>
-                        <input id="fileValue" type="text" style="margin-left: 1em; border-width: 0.2px" placeholder="size: e.g. 3.3">
+                        <input id="fileValue" type="text" style="margin-left: 1em; border-width: 0.2px"
+                            placeholder="size: e.g. 3.3">
                         TB
                     </div>
                     <div class="form-check">
@@ -173,8 +174,7 @@
                     <label for="" style="width:20%; font-size: 1.1em; margin-left: -2em;" class="text-right">Storage
                         Access: </label>
                     <select id="storageAccess" class="custom-select mr-sm-2 "
-                        style="margin-top: 0.3em; margin-left: 1em; border-color: lightgray; border-radius: 3px; width: 15em; height: 2em; margin-bottom: 1em;"
-                        >
+                        style="margin-top: 0.3em; margin-left: 1em; border-color: lightgray; border-radius: 3px; width: 15em; height: 2em; margin-bottom: 1em;">
                         <option selected>Retrieval Frequency</option>
                         <option value="day">Once a day</option>
                         <option value="week">Once a week</option>
@@ -247,14 +247,52 @@
 
             <div class="form-group row text-center justify-content-center" style="margin-top: 2em;">
                 <div class="col-sm-6">
-                    <button onclick="bestRecommendation()" class="btn btn-primary" style="background-color: #456EFD;" type="submit">Calculate My
+                    <button onclick="bestRecommendation()" class="btn btn-primary" style="background-color: #456EFD;"
+                        type="submit">Calculate My
                         Recommendations</button>
                 </div>
             </div>
         </div>
 
     </form>
-
+    <div class="container" hidden>
+        <div class="card" style="width: 25rem;">
+            <img src="assets/multi-cloud.png" class="card-img-top" style="height: 15rem" alt="...">
+            <div class="card-body">
+                <h4 class="card-title text-center">Multi-Cloud Architecture</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's
+                    content.</p>
+            </div>
+        </div>
+        <div class="card" id="box" style="width: 25rem;">
+            <img src="/assets/aws-final.png" class="card-img-top" style="height: 15rem">
+            <div class="card-body">
+                <h4 class="card-title text-center">AWS Architecture</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's
+                    content.</p>
+            </div>
+        </div>
+        <div class="card" style="width: 25rem;">
+            <img src="assets/azure-final.png" class="card-img-top" style="height: 15rem" alt="...">
+            <div class="card-body">
+                <h4 class="card-title text-center">Azure Architecture</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's
+                    content.</p>
+            </div>
+        </div>
+        <div class="card" style="width: 25rem;">
+            <img src="assets/gcp.png" class="card-img-top" style="height: 15rem" alt="...">
+            <div class="card-body">
+                <h4 class="card-title text-center">GCP Architecture</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's
+                    content.</p>
+            </div>
+        </div>
+    </div>
 
 
     <script>
@@ -318,8 +356,8 @@
         var GCPprice = 0;
         var AZUREprice = 0;
         var MULTIprice = 0;
-        
-        function bestRecommendation () { 
+
+        function bestRecommendation() {
             var country = document.getElementById("country").value;
 
             var blobCheck = document.getElementById("gridCheck1").checked;
@@ -330,7 +368,7 @@
 
             var blockCheck = document.getElementById("gridCheck3").checked;
             var blockValue = document.getElementById("blockValue").value;
-            
+
             var replicationNone = document.getElementById("gridCheck4").checked;
             var replicationAAZ = document.getElementById("gridCheck5").checked;
             var replicationCR = document.getElementById("gridCheck6").checked;
@@ -380,7 +418,7 @@
                 AZUREprice += (totalTB * pricingData.get("Data Replication")[2]);
                 GCPprice += (totalTB * pricingData.get("Data Replication")[4]);
                 MULTIprice += (Math.min((totalTB * pricingData.get("Data Replication")[0]), (totalTB * pricingData.get("Data Replication")[2]), (totalTB * pricingData.get("Data Replication")[4])));
-            } 
+            }
             else { // replicationCR
                 AWSprice += (totalTB * pricingData.get("Data Replication")[0]);
                 AZUREprice += (totalTB * pricingData.get("Data Replication")[2]);
@@ -393,7 +431,7 @@
                 AZUREprice += ((totalTB * pricingData.get("Storage Access")[2]) / 365);
                 GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 365);
                 MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 365), ((totalTB * pricingData.get("Storage Access")[2]) / 365), ((totalTB * pricingData.get("Storage Access")[4]) / 365)));
-            } 
+            }
             else if (storageAccess === "Once a week") {
                 AWSprice += ((totalTB * pricingData.get("Storage Access")[0]) / 52);
                 AZUREprice += ((totalTB * pricingData.get("Storage Access")[2]) / 52);
@@ -424,7 +462,7 @@
                 AZUREprice += (totalTB * pricingData.get("Relational DB")[2]);
                 GCPprice += (totalTB * pricingData.get("Relational DB")[4]);
                 MULTIprice += (Math.min((totalTB * pricingData.get("Relational DB")[0]), (totalTB * pricingData.get("Relational DB")[2]), (totalTB * pricingData.get("Relational DB")[4])));
-            } 
+            }
             if (noSQLDB) {
                 AWSprice += (totalTB * pricingData.get("NoSQL DB")[0]);
                 AZUREprice += (totalTB * pricingData.get("NoSQL DB")[2]);
@@ -449,37 +487,37 @@
                 if (leastLatency === latencyData.get(country)[0]) { // AWS
                     console.log("AWS Price = " + AWSprice);
                     return AWSprice;
-                } 
+                }
                 else if (leastLatency === latencyData.get(country)[2]) { // Azure
                     console.log("Azure Price = " + AZUREprice);
                     return AZUREprice;
-                } 
+                }
                 else { // GCP
                     console.log("GCP Price = " + GCPprice);
                     return GCPprice;
                 }
-            } 
+            }
             else {
                 return Math.min(AWSprice, AZUREprice, GCPprice, MULTIprice);
-            }        
+            }
         }
 
-        function multiPrice () {
+        function multiPrice() {
             console.log("Mutli-Cloud Price = " + MULTIprice);
             return MULTIprice;
         }
 
-        function awsPrice () {
+        function awsPrice() {
             console.log("AWS Price = " + AWSprice);
             return AWSprice;
         }
 
-        function azurePrice () {
+        function azurePrice() {
             console.log("Azure Price = " + AZUREprice);
             return AZUREprice;
         }
 
-        function gcpPrice () {
+        function gcpPrice() {
             console.log("GCP Price = " + GCPprice);
             return GCPprice;
         }
