@@ -248,52 +248,41 @@
             <div class="form-group row text-center justify-content-center" style="margin-top: 2em;">
                 <div class="col-sm-6">
                     <button onclick="bestRecommendation()" class="btn btn-primary" style="background-color: #456EFD;"
-                        id="clicker">Calculate My
+                        id="clicker"
+                        type="button">Calculate My
                         Recommendations</button>
                 </div>
             </div>
         </div>
 
     </form>
-    <div class="container" id="recommend_box">
+    <div class="container" id="recommend_box" hidden>
         <div class="card" style="width: 25rem;">
             <img src="assets/multi-cloud.png" class="card-img-top" style="height: 15rem" alt="...">
             <div class="card-body">
                 <h4 class="card-title text-center">Multi-Cloud Architecture</h4>
-                <p class="card-text" id="multi-cloud">Some quick example text to build on the card title and make up the
-                    bulk of the
-                    card's
-                    content.</p>
+                <p class="card-text" id="multi-cloud"></p>
             </div>
         </div>
         <div class="card" id="box" style="width: 25rem;">
             <img src="/assets/aws-final.png" class="card-img-top" style="height: 15rem">
             <div class="card-body">
                 <h4 class="card-title text-center">AWS Architecture</h4>
-                <p class="card-text" id="aws">Some quick example text to build on the card title and make up the bulk of
-                    the
-                    card's
-                    content.</p>
+                <p class="card-text" id="aws"></p>
             </div>
         </div>
         <div class="card" style="width: 25rem;">
             <img src="assets/azure-final.png" class="card-img-top" style="height: 15rem" alt="...">
             <div class="card-body">
                 <h4 class="card-title text-center">Azure Architecture</h4>
-                <p class="card-text" id="azure">Some quick example text to build on the card title and make up the bulk
-                    of the
-                    card's
-                    content.</p>
+                <p class="card-text" id="azure"></p>
             </div>
         </div>
         <div class="card" style="width: 25rem;">
             <img src="assets/gcp.png" class="card-img-top" style="height: 15rem" alt="...">
             <div class="card-body">
                 <h4 class="card-title text-center">GCP Architecture</h4>
-                <p class="card-text" id="gcp">Some quick example text to build on the card title and make up the bulk of
-                    the
-                    card's
-                    content.</p>
+                <p class="card-text" id="gcp"></p>
             </div>
         </div>
     </div>
@@ -357,9 +346,16 @@
         console.log(latencyData);
 
         var AWSprice = 0;
+        var awsResult = "";
         var GCPprice = 0;
         var AZUREprice = 0;
         var MULTIprice = 0;
+
+        var awsBox = document.getElementById("aws");
+        var azureBox = document.getElementById("azure");
+        var mcBox = document.getElementById("multi-cloud");
+        var gcpBox = document.getElementById("gcp");
+
 
         var box = document.getElementById('recommend_box');
 
@@ -370,6 +366,8 @@
         //     }, false);
 
         function bestRecommendation() {
+            box.hidden = false;
+
             var country = document.getElementById("country").value;
 
             var blobCheck = document.getElementById("gridCheck1").checked;
@@ -402,6 +400,7 @@
 
             if (blobCheck) {
                 AWSprice += (blobValue * pricingData.get("Blob Storage")[0]);
+                awsResult += "\nBlob Service Used: " + pricingData.get("Blob Storage")[1] + "\n";
                 AZUREprice += (blobValue * pricingData.get("Blob Storage")[2]);
                 GCPprice += (blobValue * pricingData.get("Blob Storage")[4]);
                 MULTIprice += (Math.min((blobValue * pricingData.get("Blob Storage")[0]), (blobValue * pricingData.get("Blob Storage")[2]), (blobValue * pricingData.get("Blob Storage")[4])));
@@ -409,6 +408,7 @@
             }
             if (fileCheck) {
                 AWSprice += (fileValue * pricingData.get("File Storage")[0]);
+                awsResult += "\nFile Service Used: " + pricingData.get("File Storage")[1] + "\n";
                 AZUREprice += (fileValue * pricingData.get("File Storage")[2]);
                 GCPprice += (fileValue * pricingData.get("File Storage")[4]);
                 MULTIprice += (Math.min((fileValue * pricingData.get("File Storage")[0]), (fileValue * pricingData.get("File Storage")[2]), (fileValue * pricingData.get("File Storage")[4])));
@@ -416,23 +416,16 @@
             }
             if (blockCheck) {
                 AWSprice += (blockValue * pricingData.get("Block Storage")[0]);
+                awsResult += "\nBlock Service Used: " + pricingData.get("Block Storage")[1] + "\n";
                 AZUREprice += (blockValue * pricingData.get("Block Storage")[2]);
                 GCPprice += (blockValue * pricingData.get("Block Storage")[4]);
                 MULTIprice += (Math.min((blockValue * pricingData.get("Block Storage")[0]), (blockValue * pricingData.get("Block Storage")[2]), (blockValue * pricingData.get("Block Storage")[4])));
                 totalTB += blockValue;
             }
 
-            /* TODO: For TB value, just currently adding all TB storage, that should be fine right? */
-            /* TODO: For replication, what prices to use for different options? Currently using same price for both */
-
-            if (replicationAAZ) { /* USING SAME pricing valye for AAZ and CR */
+            if (replicationAAZ || replicationCR) { /* USING SAME pricing valye for AAZ and CR */
                 AWSprice += (totalTB * pricingData.get("Data Replication")[0]);
-                AZUREprice += (totalTB * pricingData.get("Data Replication")[2]);
-                GCPprice += (totalTB * pricingData.get("Data Replication")[4]);
-                MULTIprice += (Math.min((totalTB * pricingData.get("Data Replication")[0]), (totalTB * pricingData.get("Data Replication")[2]), (totalTB * pricingData.get("Data Replication")[4])));
-            }
-            else { // replicationCR
-                AWSprice += (totalTB * pricingData.get("Data Replication")[0]);
+                awsResult += "\nData Replication Service Used: " + pricingData.get("Data Replication")[1] + "\n";
                 AZUREprice += (totalTB * pricingData.get("Data Replication")[2]);
                 GCPprice += (totalTB * pricingData.get("Data Replication")[4]);
                 MULTIprice += (Math.min((totalTB * pricingData.get("Data Replication")[0]), (totalTB * pricingData.get("Data Replication")[2]), (totalTB * pricingData.get("Data Replication")[4])));
@@ -440,30 +433,35 @@
 
             if (storageAccess === "Once a day") {
                 AWSprice += ((totalTB * pricingData.get("Storage Access")[0]) / 365);
+                awsResult += "\nStorage Access Service Used: " + pricingData.get("Storage Access")[1] + "\n";
                 AZUREprice += ((totalTB * pricingData.get("Storage Access")[2]) / 365);
                 GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 365);
                 MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 365), ((totalTB * pricingData.get("Storage Access")[2]) / 365), ((totalTB * pricingData.get("Storage Access")[4]) / 365)));
             }
             else if (storageAccess === "Once a week") {
                 AWSprice += ((totalTB * pricingData.get("Storage Access")[0]) / 52);
+                awsResult += "\nStorage Access Service Used: " + pricingData.get("Storage Access")[1] + "\n";
                 AZUREprice += ((totalTB * pricingData.get("Storage Access")[2]) / 52);
                 GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 52);
                 MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 52), ((totalTB * pricingData.get("Storage Access")[2]) / 52), ((totalTB * pricingData.get("Storage Access")[4]) / 52)));
             }
             else if (storageAccess === "Once a month") {
                 AWSprice += ((totalTB * pricingData.get("Storage Access")[0]) / 12);
+                awsResult += "\nStorage Access Service Used: " + pricingData.get("Storage Access")[1] + "\n";
                 AZUREprice += ((totalTB * pricingData.get("Storage Access")[2]) / 12);
                 GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 12);
                 MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 12), ((totalTB * pricingData.get("Storage Access")[2]) / 12), ((totalTB * pricingData.get("Storage Access")[4]) / 12)));
             }
             else if (storageAccess === "Once a quarter") {
                 AWSprice += ((totalTB * pricingData.get("Storage Access")[0]) / 4);
+                awsResult += "\nStorage Access Service Used: " + pricingData.get("Storage Access")[1] + "\n";
                 AZUREprice += ((totalTB * pricingData.get("Storage Access")[2]) / 4);
                 GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 4);
                 MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 4), ((totalTB * pricingData.get("Storage Access")[2]) / 4), ((totalTB * pricingData.get("Storage Access")[4]) / 4)));
             }
             else { // Once a year
                 AWSprice += (totalTB * pricingData.get("Storage Access")[0]);
+                awsResult += "\nStorage Access Service Used: " + pricingData.get("Storage Access")[1] + "\n";
                 AZUREprice += (totalTB * pricingData.get("Storage Access")[2]);
                 GCPprice += (totalTB * pricingData.get("Storage Access")[4]);
                 MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0])), ((totalTB * pricingData.get("Storage Access")[2])), ((totalTB * pricingData.get("Storage Access")[4]))));
@@ -471,28 +469,37 @@
 
             if (relationalDB) {
                 AWSprice += (totalTB * pricingData.get("Relational DB")[0]);
+                awsResult += "\nDatabase Service Used: " + pricingData.get("Relational DB")[1] + "\n";
                 AZUREprice += (totalTB * pricingData.get("Relational DB")[2]);
                 GCPprice += (totalTB * pricingData.get("Relational DB")[4]);
                 MULTIprice += (Math.min((totalTB * pricingData.get("Relational DB")[0]), (totalTB * pricingData.get("Relational DB")[2]), (totalTB * pricingData.get("Relational DB")[4])));
             }
             if (noSQLDB) {
                 AWSprice += (totalTB * pricingData.get("NoSQL DB")[0]);
+                awsResult += "\nDatabase Service Used: " + pricingData.get("NoSQL DB")[1] + "\n";
                 AZUREprice += (totalTB * pricingData.get("NoSQL DB")[2]);
                 GCPprice += (totalTB * pricingData.get("NoSQL DB")[4]);
                 MULTIprice += (Math.min((totalTB * pricingData.get("NoSQL DB")[0]), (totalTB * pricingData.get("NoSQL DB")[2]), (totalTB * pricingData.get("NoSQL DB")[4])));
             }
             if (inMemoryDB) {
                 AWSprice += (totalTB * pricingData.get("In-Memory DB")[0]);
+                awsResult += "\nDatabase Service Used: " + pricingData.get("In-Memory DB")[1] + "\n";
                 AZUREprice += (totalTB * pricingData.get("In-Memory DB")[2]);
                 GCPprice += (totalTB * pricingData.get("In-Memory DB")[4]);
                 MULTIprice += (Math.min((totalTB * pricingData.get("In-Memory DB")[0]), (totalTB * pricingData.get("In-Memory DB")[2]), (totalTB * pricingData.get("In-Memory DB")[4])));
             }
             if (bigDataClusterDB) {
                 AWSprice += (pricingData.get("Big Data Processing")[0]);
+                awsResult += "\nDatabase Service Used: " + pricingData.get("Big Data Processing")[1] + "\n";
                 AZUREprice += (pricingData.get("Big Data Processing")[2]);
                 GCPprice += (pricingData.get("Big Data Processing")[4]);
                 MULTIprice += (Math.min((pricingData.get("Big Data Processing")[0]), (pricingData.get("Big Data Processing")[2]), (pricingData.get("Big Data Processing")[4])));
             }
+
+            multiPrice();
+            awsPrice();
+            azurePrice();
+            gcpPrice();
 
             if (latencyImportant >= costImportant) {
                 var leastLatency = Math.min(latencyData.get(country)[0], latencyData.get(country)[2], latencyData.get(country)[4]);
@@ -512,27 +519,29 @@
             else {
                 return Math.min(AWSprice, AZUREprice, GCPprice, MULTIprice);
             }
-            box.hidden = false;
+
         }
 
         function multiPrice() {
             console.log("Mutli-Cloud Price = " + MULTIprice);
-            return MULTIprice;
+            mcBox.innerHTML = mcBox.innerHTML + "<strong> Total Price: $" + MULTIprice.toFixed(2) + "<\strong> \n";
         }
 
         function awsPrice() {
             console.log("AWS Price = " + AWSprice);
-            return AWSprice;
+            awsBox.innerHTML = awsBox.innerHTML + "<strong> Total Price: $" + AWSprice.toFixed(2) + "<\strong>" + awsResult;
         }
 
         function azurePrice() {
             console.log("Azure Price = " + AZUREprice);
-            return AZUREprice;
+            azureBox.innerHTML = azureBox.innerHTML + "<strong> Total Price: $" + AZUREprice.toFixed(2) + "<\strong>";
+
         }
 
         function gcpPrice() {
             console.log("GCP Price = " + GCPprice);
-            return GCPprice;
+            gcpBox.innerHTML = gcpBox.innerHTML + "<strong> Total Price: $" + GCPprice.toFixed(2) + "<\strong>";
+
         }
 
     </script>
