@@ -248,19 +248,20 @@
             <div class="form-group row text-center justify-content-center" style="margin-top: 2em;">
                 <div class="col-sm-6">
                     <button onclick="bestRecommendation()" class="btn btn-primary" style="background-color: #456EFD;"
-                        type="submit">Calculate My
+                        id="clicker">Calculate My
                         Recommendations</button>
                 </div>
             </div>
         </div>
 
     </form>
-    <div class="container" hidden>
+    <div class="container" id="recommend_box">
         <div class="card" style="width: 25rem;">
             <img src="assets/multi-cloud.png" class="card-img-top" style="height: 15rem" alt="...">
             <div class="card-body">
                 <h4 class="card-title text-center">Multi-Cloud Architecture</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                <p class="card-text" id="multi-cloud">Some quick example text to build on the card title and make up the
+                    bulk of the
                     card's
                     content.</p>
             </div>
@@ -269,7 +270,8 @@
             <img src="/assets/aws-final.png" class="card-img-top" style="height: 15rem">
             <div class="card-body">
                 <h4 class="card-title text-center">AWS Architecture</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                <p class="card-text" id="aws">Some quick example text to build on the card title and make up the bulk of
+                    the
                     card's
                     content.</p>
             </div>
@@ -278,7 +280,8 @@
             <img src="assets/azure-final.png" class="card-img-top" style="height: 15rem" alt="...">
             <div class="card-body">
                 <h4 class="card-title text-center">Azure Architecture</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                <p class="card-text" id="azure">Some quick example text to build on the card title and make up the bulk
+                    of the
                     card's
                     content.</p>
             </div>
@@ -287,7 +290,8 @@
             <img src="assets/gcp.png" class="card-img-top" style="height: 15rem" alt="...">
             <div class="card-body">
                 <h4 class="card-title text-center">GCP Architecture</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                <p class="card-text" id="gcp">Some quick example text to build on the card title and make up the bulk of
+                    the
                     card's
                     content.</p>
             </div>
@@ -356,6 +360,14 @@
         var GCPprice = 0;
         var AZUREprice = 0;
         var MULTIprice = 0;
+
+        var box = document.getElementById('recommend_box');
+
+        // document.getElementById("clicker")
+        //     .addEventListener("click", function () {
+        //         //box.hidden = true;
+        //         box.hidden = false;
+        //     }, false);
 
         function bestRecommendation() {
             var country = document.getElementById("country").value;
@@ -500,6 +512,7 @@
             else {
                 return Math.min(AWSprice, AZUREprice, GCPprice, MULTIprice);
             }
+            box.hidden = false;
         }
 
         function multiPrice() {
