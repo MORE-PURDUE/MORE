@@ -352,6 +352,7 @@
         var AZUREprice = 0;
         var azureResult = "";
         var MULTIprice = 0;
+        var multiResult = "";
 
         var awsBox = document.getElementById("aws");
         var azureBox = document.getElementById("azure");
@@ -408,6 +409,8 @@
                 azureResult += "<br><ul><li> Blob Service Used: " + pricingData.get("Blob Storage")[3] + "</li>";
 
                 GCPprice += (blobValue * pricingData.get("Blob Storage")[4]);
+                gcpResult += "<br><ul><li> Blob Service Used: " + pricingData.get("Blob Storage")[5] + "</li>";
+
                 MULTIprice += (Math.min((blobValue * pricingData.get("Blob Storage")[0]), (blobValue * pricingData.get("Blob Storage")[2]), (blobValue * pricingData.get("Blob Storage")[4])));
                 totalTB += blobValue;
             }
@@ -419,6 +422,8 @@
                 azureResult += "<li> File Service Used: " + pricingData.get("File Storage")[3] + "</li>";
 
                 GCPprice += (fileValue * pricingData.get("File Storage")[4]);
+                gcpResult += "<li> File Service Used: " + pricingData.get("File Storage")[5] + "</li>";
+
                 MULTIprice += (Math.min((fileValue * pricingData.get("File Storage")[0]), (fileValue * pricingData.get("File Storage")[2]), (fileValue * pricingData.get("File Storage")[4])));
                 totalTB += fileValue;
             }
@@ -430,6 +435,8 @@
                 azureResult += "<li> Block Service Used: " + pricingData.get("Block Storage")[3] + "</li>";
 
                 GCPprice += (blockValue * pricingData.get("Block Storage")[4]);
+                gcpResult += "<li> Block Service Used: " + pricingData.get("Block Storage")[5] + "</li>";
+
                 MULTIprice += (Math.min((blockValue * pricingData.get("Block Storage")[0]), (blockValue * pricingData.get("Block Storage")[2]), (blockValue * pricingData.get("Block Storage")[4])));
                 totalTB += blockValue;
             }
@@ -442,6 +449,8 @@
                 azureResult += "<li> Data Replication Service Used: " + pricingData.get("Data Replication")[3] + "</li>";
 
                 GCPprice += (totalTB * pricingData.get("Data Replication")[4]);
+                gcpResult += "<li> Data Replication Service Used: " + pricingData.get("Data Replication")[5] + "</li>";
+
                 MULTIprice += (Math.min((totalTB * pricingData.get("Data Replication")[0]), (totalTB * pricingData.get("Data Replication")[2]), (totalTB * pricingData.get("Data Replication")[4])));
             }
 
@@ -453,6 +462,8 @@
                 azureResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
 
                 GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 365);
+                gcpResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+
                 MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 365), ((totalTB * pricingData.get("Storage Access")[2]) / 365), ((totalTB * pricingData.get("Storage Access")[4]) / 365)));
             }
             else if (storageAccess === "Once a week") {
@@ -463,6 +474,8 @@
                 azureResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
 
                 GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 52);
+                gcpResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+
                 MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 52), ((totalTB * pricingData.get("Storage Access")[2]) / 52), ((totalTB * pricingData.get("Storage Access")[4]) / 52)));
             }
             else if (storageAccess === "Once a month") {
@@ -473,6 +486,8 @@
                 azureResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
 
                 GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 12);
+                gcpResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+
                 MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 12), ((totalTB * pricingData.get("Storage Access")[2]) / 12), ((totalTB * pricingData.get("Storage Access")[4]) / 12)));
             }
             else if (storageAccess === "Once a quarter") {
@@ -483,6 +498,8 @@
                 azureResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
 
                 GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 4);
+                gcpResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+
                 MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 4), ((totalTB * pricingData.get("Storage Access")[2]) / 4), ((totalTB * pricingData.get("Storage Access")[4]) / 4)));
             }
             else { // Once a year
@@ -493,6 +510,8 @@
                 azureResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
 
                 GCPprice += (totalTB * pricingData.get("Storage Access")[4]);
+                gcpResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+
                 MULTIprice += (Math.min(((totalTB * pricingData.get("Storage Access")[0])), ((totalTB * pricingData.get("Storage Access")[2])), ((totalTB * pricingData.get("Storage Access")[4]))));
             }
 
@@ -504,6 +523,8 @@
                 azureResult += "<li> Database Service Used: " + pricingData.get("Relational DB")[3] + "</li>";
 
                 GCPprice += (totalTB * pricingData.get("Relational DB")[4]);
+                gcpResult += "<li> Database Service Used: " + pricingData.get("Relational DB")[5] + "</li>";
+
                 MULTIprice += (Math.min((totalTB * pricingData.get("Relational DB")[0]), (totalTB * pricingData.get("Relational DB")[2]), (totalTB * pricingData.get("Relational DB")[4])));
             }
             if (noSQLDB) {
@@ -514,6 +535,8 @@
                 azureResult += "<li> Database Service Used: " + pricingData.get("NoSQL DB")[3] + "</li>";
 
                 GCPprice += (totalTB * pricingData.get("NoSQL DB")[4]);
+                gcpResult += "<li> Database Service Used: " + pricingData.get("NoSQL DB")[5] + "</li>";
+
                 MULTIprice += (Math.min((totalTB * pricingData.get("NoSQL DB")[0]), (totalTB * pricingData.get("NoSQL DB")[2]), (totalTB * pricingData.get("NoSQL DB")[4])));
             }
             if (inMemoryDB) {
@@ -524,6 +547,8 @@
                 azureResult += "<li> Database Service Used: " + pricingData.get("In-Memory DB")[3] + "</li>";
 
                 GCPprice += (totalTB * pricingData.get("In-Memory DB")[4]);
+                gcpResult += "<li> Database Service Used: " + pricingData.get("In-Memory DB")[5] + "</li>";
+
                 MULTIprice += (Math.min((totalTB * pricingData.get("In-Memory DB")[0]), (totalTB * pricingData.get("In-Memory DB")[2]), (totalTB * pricingData.get("In-Memory DB")[4])));
             }
             if (bigDataClusterDB) {
@@ -534,11 +559,14 @@
                 azureResult += "<li> Database Service Used: " + pricingData.get("Big Data Processing")[3] + "</li>";
 
                 GCPprice += (pricingData.get("Big Data Processing")[4]);
+                gcpResult += "<li> Database Service Used: " + pricingData.get("Big Data Processing")[5] + "</li>";
+
                 MULTIprice += (Math.min((pricingData.get("Big Data Processing")[0]), (pricingData.get("Big Data Processing")[2]), (pricingData.get("Big Data Processing")[4])));
             }
 
             awsResult += "</br></ul>";
             azureResult += "</br></ul>";
+            gcpResult += "</br></ul>";
 
             multiPrice();
             awsPrice();
@@ -585,8 +613,8 @@
 
         function gcpPrice() {
             console.log("GCP Price = " + GCPprice);
-            gcpBox.innerHTML = gcpBox.innerHTML + "<strong> Total Price: $" + GCPprice.toFixed(2) + "<\strong>";
-
+            gcpBox.innerHTML = gcpBox.innerHTML + "<strong> <center> Total Price: $" + GCPprice.toFixed(2) + "<\strong>";
+            gcpBox.innerHTML += "<strong>" + gcpResult + "<\strong>";
         }
 
     </script>
