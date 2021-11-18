@@ -257,7 +257,7 @@
         <div id="recommend_box" hidden>
             <h3 class="text-center"><strong>Cloud Architecture Recommendation Optimizing Cost and Latency</strong></h3>
             <div class="container">
-                <div class="card display-box" style="width: 100rem; margin-left: 1em; border-radius: 40px ">
+                <div class="card display-box" style="width: 105rem; margin-left: 1em; border-radius: 40px ">
                     <img src="assets/multi-cloud.png" class="card-img-top" style="height: 15rem" alt="...">
                     <div class="card-body">
                         <h4 class="card-title text-center">Multi-Cloud Architecture</h4>
@@ -278,7 +278,7 @@
                         <p class="card-text" id="azure"></p>
                     </div>
                 </div>
-                <div class="card display-box" style="width: 100rem;  margin-left: 1em; border-radius: 40px">
+                <div class="card display-box" style="width: 105rem;  margin-left: 1em; border-radius: 40px">
                     <img src="assets/gcp.png" class="card-img-top" style="height: 15rem" alt="...">
                     <div class="card-body">
                         <h4 class="card-title text-center">GCP Architecture</h4>
@@ -364,12 +364,12 @@
         var recButton = document.getElementById("clicker")
 
         var box = document.getElementById('recommend_box');
-        var country = document.getElementById("country").value;
-        var customerLoc = '<br><strong>Customer Location:</strong> <em>' + country + '</em>'
-        var awsRegion = '<br><strong>Least latency AWS region:</strong> <em>' + latencyData.get(country)[1] + '<\em><br><strong>Average Latency:</strong> <em>' + latencyData.get(country)[0] + ' ms</em>'
-        var azureRegion = '<strong>Least latency Azure region:</strong> <em>' + '<\em><br><strong>Average Latency:</strong> <em>' + '</em>'
-        var gcpRegion = '<strong>Least latency GCP region::</strong> <em>' + '<\em><br><strong>Average Latency:</strong> <em>' + '</em>'
-
+        var country = '';
+        var customerLoc = '';
+        var awsRegion = '';
+        var azureRegion = '';
+        var gcpRegion = '';
+        var multiRegion = '';
 
         // document.getElementById("clicker")
         //     .addEventListener("click", function () {
@@ -379,7 +379,13 @@
 
         function bestRecommendation() {
             box.hidden = false;
-
+            country = document.getElementById("country").value;
+            customerLoc = '<br><strong>Customer Location:</strong> <em>' + country + '</em>';
+            awsRegion = '<br><strong>Least latency AWS region:</strong> <em>' + latencyData.get(country)[1] + '<\em><br><strong>Average Latency:</strong> <em>' + latencyData.get(country)[0] + ' ms</em>';
+            azureRegion = '<br><strong>Least latency Azure region:</strong> <em>' + latencyData.get(country)[3] + '<\em><br><strong>Average Latency:</strong> <em>' + latencyData.get(country)[2] + ' ms</em>';
+            gcpRegion = '<br><strong>Least latency GCP region:</strong> <em>' + latencyData.get(country)[5] + '<\em><br><strong>Average Latency:</strong> <em>' + latencyData.get(country)[4] + ' ms</em>';
+            multiRegion = '<br><strong>Best AWS region:</strong> <em>' + latencyData.get(country)[1] + '<\em><br>' + '<strong>Best Azure region:</strong> <em>' + latencyData.get(country)[3] + '<\em><br>' +
+                '<strong>Best GCP region:</strong> <em>' + latencyData.get(country)[5] + '<\em><br>';
 
 
             var blobCheck = document.getElementById("gridCheck1").checked;
@@ -739,6 +745,7 @@
             console.log("Mutli-Cloud Price = " + MULTIprice);
             mcBox.innerHTML = mcBox.innerHTML + "<strong> <center> Total Price: </strong><em>$" + MULTIprice.toFixed(2) + "<\em>\n";
             mcBox.innerHTML += customerLoc + '\n\n'
+            mcBox.innerHTML += multiRegion + '\n\n'
             mcBox.innerHTML += '<br><br>' + multiResult;
         }
 
@@ -754,6 +761,7 @@
             console.log("Azure Price = " + AZUREprice);
             azureBox.innerHTML = azureBox.innerHTML + "<strong> <center> Total Price: </strong><em>$" + AZUREprice.toFixed(2) + "<\em>\n";
             azureBox.innerHTML += customerLoc + '\n\n'
+            azureBox.innerHTML += azureRegion + '\n\n'
             azureBox.innerHTML += '<br><br>' + azureResult;
         }
 
@@ -761,6 +769,7 @@
             console.log("GCP Price = " + GCPprice);
             gcpBox.innerHTML = gcpBox.innerHTML + "<strong> <center> Total Price: </strong><em>$" + GCPprice.toFixed(2) + "<\em>\n";
             gcpBox.innerHTML += customerLoc + '\n\n'
+            gcpBox.innerHTML += gcpRegion + '\n\n'
             gcpBox.innerHTML += '<br><br>' + gcpResult;
         }
 
