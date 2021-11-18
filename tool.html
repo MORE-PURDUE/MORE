@@ -74,9 +74,9 @@
                     class="col-sm-2 col-form-label text-right justify-content-right">Location of
                     Customers: </label>
                 <select name="country" id="country" default="choose country" class="text-left"
-                    style="width: 20%; margin-right: 30%; height: 10%" id="cars">
-                    <option value="none" selected>Customer Location</option>
-                    <option value="Australia">Australia</option>
+                    style="width: 20%; margin-right: 30%; height: 10%" id="cars" required>
+                    <option value="none">Customer Location</option>
+                    <option value="Australia" selected>Australia</option>
                     <option value="Brazil">Brazil</option>
                     <option value="Canada">Canada</option>
                     <option value="China">China</option>
@@ -248,44 +248,47 @@
             <div class="form-group row text-center justify-content-center" style="margin-top: 2em;">
                 <div class="col-sm-6">
                     <button onclick="bestRecommendation()" class="btn btn-primary" style="background-color: #456EFD;"
-                        id="clicker"
-                        type="button">Calculate My
+                        id="clicker" type="button">Calculate My
                         Recommendations</button>
                 </div>
             </div>
         </div>
 
+        <div id="recommend_box" hidden>
+            <h3 class="text-center"><strong>Cloud Architecture Recommendation Optimizing Cost and Latency</strong></h3>
+            <div class="container">
+                <div class="card display-box" style="width: 100rem; margin-left: 1em; border-radius: 40px ">
+                    <img src="assets/multi-cloud.png" class="card-img-top" style="height: 15rem" alt="...">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">Multi-Cloud Architecture</h4>
+                        <p class="card-text" id="multi-cloud"></p>
+                    </div>
+                </div>
+                <div class="card display-box" id="box" style="width: 100rem;  margin-left: 1em; border-radius: 40px">
+                    <img src="/assets/aws-final.png" class="card-img-top" style="height: 15rem">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">AWS Architecture</h4>
+                        <p class="card-text" id="aws"></p>
+                    </div>
+                </div>
+                <div class="card display-box" style="width: 100rem;  margin-left: 1em; border-radius: 40px">
+                    <img src="assets/azure-final.png" class="card-img-top" style="height: 15rem" alt="...">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">Azure Architecture</h4>
+                        <p class="card-text" id="azure"></p>
+                    </div>
+                </div>
+                <div class="card display-box" style="width: 100rem;  margin-left: 1em; border-radius: 40px">
+                    <img src="assets/gcp.png" class="card-img-top" style="height: 15rem" alt="...">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">GCP Architecture</h4>
+                        <p class="card-text" id="gcp"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
-    <div class="container" id="recommend_box" hidden>
-        <div class="card" style="width: 25rem;">
-            <img src="assets/multi-cloud.png" class="card-img-top" style="height: 15rem" alt="...">
-            <div class="card-body">
-                <h4 class="card-title text-center">Multi-Cloud Architecture</h4>
-                <p class="card-text" id="multi-cloud"></p>
-            </div>
-        </div>
-        <div class="card" id="box" style="width: 25rem;">
-            <img src="/assets/aws-final.png" class="card-img-top" style="height: 15rem">
-            <div class="card-body">
-                <h4 class="card-title text-center">AWS Architecture</h4>
-                <p class="card-text" id="aws"></p>
-            </div>
-        </div>
-        <div class="card" style="width: 25rem;">
-            <img src="assets/azure-final.png" class="card-img-top" style="height: 15rem" alt="...">
-            <div class="card-body">
-                <h4 class="card-title text-center">Azure Architecture</h4>
-                <p class="card-text" id="azure"></p>
-            </div>
-        </div>
-        <div class="card" style="width: 25rem;">
-            <img src="assets/gcp.png" class="card-img-top" style="height: 15rem" alt="...">
-            <div class="card-body">
-                <h4 class="card-title text-center">GCP Architecture</h4>
-                <p class="card-text" id="gcp"></p>
-            </div>
-        </div>
-    </div>
+
 
 
     <script>
@@ -358,9 +361,14 @@
         var azureBox = document.getElementById("azure");
         var mcBox = document.getElementById("multi-cloud");
         var gcpBox = document.getElementById("gcp");
-
+        var recButton = document.getElementById("clicker")
 
         var box = document.getElementById('recommend_box');
+        var country = document.getElementById("country").value;
+        var customerLoc = '<br><strong>Customer Location:</strong> <em>' + country + '</em>'
+        var awsRegion = '<br><strong>Least latency AWS region:</strong> <em>' + latencyData.get(country)[1] + '<\em><br><strong>Average Latency:</strong> <em>' + latencyData.get(country)[0] + ' ms</em>'
+        var azureRegion = '<strong>Least latency Azure region:</strong> <em>' + '<\em><br><strong>Average Latency:</strong> <em>' + '</em>'
+        var gcpRegion = '<strong>Least latency GCP region::</strong> <em>' + '<\em><br><strong>Average Latency:</strong> <em>' + '</em>'
 
 
         // document.getElementById("clicker")
@@ -372,7 +380,7 @@
         function bestRecommendation() {
             box.hidden = false;
 
-            var country = document.getElementById("country").value;
+
 
             var blobCheck = document.getElementById("gridCheck1").checked;
             var blobValue = document.getElementById("blobValue").value;
@@ -405,294 +413,294 @@
 
             if (blobCheck) {
                 AWSprice += (blobValue * pricingData.get("Blob Storage")[0]);
-                awsResult += "<br><ul><li> Blob Service Used: " + pricingData.get("Blob Storage")[1] + "</li>";
+                awsResult += "<br><ul><li> Blob : " + pricingData.get("Blob Storage")[1] + "</li>";
 
                 AZUREprice += (blobValue * pricingData.get("Blob Storage")[2]);
-                azureResult += "<br><ul><li> Blob Service Used: " + pricingData.get("Blob Storage")[3] + "</li>";
+                azureResult += "<br><ul><li> Blob : " + pricingData.get("Blob Storage")[3] + "</li>";
 
                 GCPprice += (blobValue * pricingData.get("Blob Storage")[4]);
-                gcpResult += "<br><ul><li> Blob Service Used: " + pricingData.get("Blob Storage")[5] + "</li>";
+                gcpResult += "<br><ul><li> Blob : " + pricingData.get("Blob Storage")[5] + "</li>";
 
                 min = (Math.min((blobValue * pricingData.get("Blob Storage")[0]), (blobValue * pricingData.get("Blob Storage")[2]), (blobValue * pricingData.get("Blob Storage")[4])));
                 MULTIprice += min;
                 if (min === (blobValue * pricingData.get("Blob Storage")[0])) {
-                    multiResult += "<br><ul><li> Blob Service Used: " + pricingData.get("Blob Storage")[1] + "</li>"
+                    multiResult += "<br><ul><li> Blob : " + pricingData.get("Blob Storage")[1] + "</li>"
                 }
                 else if (min === (blobValue * pricingData.get("Blob Storage")[2])) {
-                    multiResult += "<br><ul><li> Blob Service Used: " + pricingData.get("Blob Storage")[3] + "</li>";
+                    multiResult += "<br><ul><li> Blob : " + pricingData.get("Blob Storage")[3] + "</li>";
                 }
                 else {
-                    multiResult += "<br><ul><li> Blob Service Used: " + pricingData.get("Blob Storage")[5] + "</li>";
+                    multiResult += "<br><ul><li> Blob : " + pricingData.get("Blob Storage")[5] + "</li>";
                 }
                 totalTB += blobValue;
             }
             if (fileCheck) {
                 AWSprice += (fileValue * pricingData.get("File Storage")[0]);
-                awsResult += "<li> File Service Used: " + pricingData.get("File Storage")[1] + "</li>";
+                awsResult += "<li> File : " + pricingData.get("File Storage")[1] + "</li>";
 
                 AZUREprice += (fileValue * pricingData.get("File Storage")[2]);
-                azureResult += "<li> File Service Used: " + pricingData.get("File Storage")[3] + "</li>";
+                azureResult += "<li> File : " + pricingData.get("File Storage")[3] + "</li>";
 
                 GCPprice += (fileValue * pricingData.get("File Storage")[4]);
-                gcpResult += "<li> File Service Used: " + pricingData.get("File Storage")[5] + "</li>";
+                gcpResult += "<li> File : " + pricingData.get("File Storage")[5] + "</li>";
 
                 min = (Math.min((fileValue * pricingData.get("File Storage")[0]), (fileValue * pricingData.get("File Storage")[2]), (fileValue * pricingData.get("File Storage")[4])));
                 MULTIprice += min;
                 if (min === (fileValue * pricingData.get("File Storage")[0])) {
-                    multiResult += "<li> File Service Used: " + pricingData.get("File Storage")[1] + "</li>";
-                } 
+                    multiResult += "<li> File : " + pricingData.get("File Storage")[1] + "</li>";
+                }
                 else if (min === (fileValue * pricingData.get("File Storage")[2])) {
-                    multiResult += "<li> File Service Used: " + pricingData.get("File Storage")[3] + "</li>";
+                    multiResult += "<li> File : " + pricingData.get("File Storage")[3] + "</li>";
                 }
                 else {
-                    multiResult += "<li> File Service Used: " + pricingData.get("File Storage")[5] + "</li>";
+                    multiResult += "<li> File : " + pricingData.get("File Storage")[5] + "</li>";
                 }
                 totalTB += fileValue;
             }
             if (blockCheck) {
                 AWSprice += (blockValue * pricingData.get("Block Storage")[0]);
-                awsResult += "<li> Block Service Used: " + pricingData.get("Block Storage")[1] + "</li>";
+                awsResult += "<li> Block : " + pricingData.get("Block Storage")[1] + "</li>";
 
                 AZUREprice += (blockValue * pricingData.get("Block Storage")[2]);
-                azureResult += "<li> Block Service Used: " + pricingData.get("Block Storage")[3] + "</li>";
+                azureResult += "<li> Block : " + pricingData.get("Block Storage")[3] + "</li>";
 
                 GCPprice += (blockValue * pricingData.get("Block Storage")[4]);
-                gcpResult += "<li> Block Service Used: " + pricingData.get("Block Storage")[5] + "</li>";
+                gcpResult += "<li> Block : " + pricingData.get("Block Storage")[5] + "</li>";
 
                 min = (Math.min((blockValue * pricingData.get("Block Storage")[0]), (blockValue * pricingData.get("Block Storage")[2]), (blockValue * pricingData.get("Block Storage")[4])));
                 MULTIprice += min;
                 if (min === (blockValue * pricingData.get("Block Storage")[0])) {
-                    multiResult += "<li> Block Service Used: " + pricingData.get("Block Storage")[1] + "</li>";
+                    multiResult += "<li> Block : " + pricingData.get("Block Storage")[1] + "</li>";
                 }
                 else if (min === (blockValue * pricingData.get("Block Storage")[2])) {
-                    multiResult += "<li> Block Service Used: " + pricingData.get("Block Storage")[3] + "</li>";
+                    multiResult += "<li> Block : " + pricingData.get("Block Storage")[3] + "</li>";
                 }
                 else {
-                    multiResult += "<li> Block Service Used: " + pricingData.get("Block Storage")[5] + "</li>";
+                    multiResult += "<li> Block : " + pricingData.get("Block Storage")[5] + "</li>";
                 }
                 totalTB += blockValue;
             }
 
             if (replicationAAZ || replicationCR) { /* USING SAME pricing valye for AAZ and CR */
-                AWSprice += (totalTB * pricingData.get("Data Replication")[0]);
-                awsResult += "<li> Data Replication Service Used: " + pricingData.get("Data Replication")[1] + "</li>";
+                AWSprice += (pricingData.get("Data Replication")[0]);
+                awsResult += "<li> Data Replication : " + pricingData.get("Data Replication")[1] + "</li>";
 
-                AZUREprice += (totalTB * pricingData.get("Data Replication")[2]);
-                azureResult += "<li> Data Replication Service Used: " + pricingData.get("Data Replication")[3] + "</li>";
+                AZUREprice += (pricingData.get("Data Replication")[2]);
+                azureResult += "<li> Data Replication : " + pricingData.get("Data Replication")[3] + "</li>";
 
-                GCPprice += (totalTB * pricingData.get("Data Replication")[4]);
-                gcpResult += "<li> Data Replication Service Used: " + pricingData.get("Data Replication")[5] + "</li>";
+                GCPprice += (pricingData.get("Data Replication")[4]);
+                gcpResult += "<li> Data Replication : " + pricingData.get("Data Replication")[5] + "</li>";
 
-                min = (Math.min((totalTB * pricingData.get("Data Replication")[0]), (totalTB * pricingData.get("Data Replication")[2]), (totalTB * pricingData.get("Data Replication")[4])));
+                min = (Math.min((pricingData.get("Data Replication")[0]), (pricingData.get("Data Replication")[2]), (pricingData.get("Data Replication")[4])));
                 MULTIprice += min;
-                if (min === (totalTB * pricingData.get("Data Replication")[0])) {
-                    multiResult += "<li> Data Replication Service Used: " + pricingData.get("Data Replication")[1] + "</li>";
+                if (min === (pricingData.get("Data Replication")[0])) {
+                    multiResult += "<li> Data Replication : " + pricingData.get("Data Replication")[1] + "</li>";
                 }
-                else if (min === (totalTB * pricingData.get("Data Replication")[2])) {
-                    multiResult += "<li> Data Replication Service Used: " + pricingData.get("Data Replication")[3] + "</li>";
+                else if (min === (pricingData.get("Data Replication")[2])) {
+                    multiResult += "<li> Data Replication : " + pricingData.get("Data Replication")[3] + "</li>";
                 }
                 else {
-                    multiResult += "<li> Data Replication Service Used: " + pricingData.get("Data Replication")[5] + "</li>";
+                    multiResult += "<li> Data Replication : " + pricingData.get("Data Replication")[5] + "</li>";
                 }
             }
 
             if (storageAccess === "Once a day") {
-                AWSprice += ((totalTB * pricingData.get("Storage Access")[0]) / 365);
-                awsResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[1] + "</li>";
+                AWSprice += ((pricingData.get("Storage Access")[0]) / 365);
+                awsResult += "<li> Storage Access : " + pricingData.get("Storage Access")[1] + "</li>";
 
-                AZUREprice += ((totalTB * pricingData.get("Storage Access")[2]) / 365);
-                azureResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
+                AZUREprice += ((pricingData.get("Storage Access")[2]) / 365);
+                azureResult += "<li> Storage Access : " + pricingData.get("Storage Access")[3] + "</li>";
 
-                GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 365);
-                gcpResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+                GCPprice += ((pricingData.get("Storage Access")[4]) / 365);
+                gcpResult += "<li> Storage Access : " + pricingData.get("Storage Access")[5] + "</li>";
 
-                min = (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 365), ((totalTB * pricingData.get("Storage Access")[2]) / 365), ((totalTB * pricingData.get("Storage Access")[4]) / 365)));
+                min = (Math.min(((pricingData.get("Storage Access")[0]) / 365), ((pricingData.get("Storage Access")[2]) / 365), ((pricingData.get("Storage Access")[4]) / 365)));
                 MULTIprice += min;
-                if (min === ((totalTB * pricingData.get("Storage Access")[0]) / 365)) {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[1] + "</li>";
+                if (min === ((pricingData.get("Storage Access")[0]) / 365)) {
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[1] + "</li>";
                 }
-                else if (min === ((totalTB * pricingData.get("Storage Access")[2]) / 365)) {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
+                else if (min === ((pricingData.get("Storage Access")[2]) / 365)) {
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[3] + "</li>";
                 }
                 else {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[5] + "</li>";
                 }
             }
             else if (storageAccess === "Once a week") {
-                AWSprice += ((totalTB * pricingData.get("Storage Access")[0]) / 52);
-                awsResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[1] + "</li>";
+                AWSprice += ((pricingData.get("Storage Access")[0]) / 52);
+                awsResult += "<li> Storage Access : " + pricingData.get("Storage Access")[1] + "</li>";
 
-                AZUREprice += ((totalTB * pricingData.get("Storage Access")[2]) / 52);
-                azureResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
+                AZUREprice += ((pricingData.get("Storage Access")[2]) / 52);
+                azureResult += "<li> Storage Access : " + pricingData.get("Storage Access")[3] + "</li>";
 
-                GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 52);
-                gcpResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+                GCPprice += ((pricingData.get("Storage Access")[4]) / 52);
+                gcpResult += "<li> Storage Access : " + pricingData.get("Storage Access")[5] + "</li>";
 
-                min = (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 52), ((totalTB * pricingData.get("Storage Access")[2]) / 52), ((totalTB * pricingData.get("Storage Access")[4]) / 52)));
+                min = (Math.min(((pricingData.get("Storage Access")[0]) / 52), ((pricingData.get("Storage Access")[2]) / 52), ((pricingData.get("Storage Access")[4]) / 52)));
                 MULTIprice += min;
-                if (min === ((totalTB * pricingData.get("Storage Access")[0]) / 52)) {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[1] + "</li>";
+                if (min === ((pricingData.get("Storage Access")[0]) / 52)) {
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[1] + "</li>";
                 }
-                else if (min === ((totalTB * pricingData.get("Storage Access")[2]) / 52)) {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
+                else if (min === ((pricingData.get("Storage Access")[2]) / 52)) {
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[3] + "</li>";
                 }
                 else {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[5] + "</li>";
                 }
             }
             else if (storageAccess === "Once a month") {
-                AWSprice += ((totalTB * pricingData.get("Storage Access")[0]) / 12);
-                awsResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[1] + "</li>";
+                AWSprice += ((pricingData.get("Storage Access")[0]) / 12);
+                awsResult += "<li> Storage Access : " + pricingData.get("Storage Access")[1] + "</li>";
 
-                AZUREprice += ((totalTB * pricingData.get("Storage Access")[2]) / 12);
-                azureResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
+                AZUREprice += ((pricingData.get("Storage Access")[2]) / 12);
+                azureResult += "<li> Storage Access : " + pricingData.get("Storage Access")[3] + "</li>";
 
-                GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 12);
-                gcpResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+                GCPprice += ((pricingData.get("Storage Access")[4]) / 12);
+                gcpResult += "<li> Storage Access : " + pricingData.get("Storage Access")[5] + "</li>";
 
-                min = (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 12), ((totalTB * pricingData.get("Storage Access")[2]) / 12), ((totalTB * pricingData.get("Storage Access")[4]) / 12)));
+                min = (Math.min(((pricingData.get("Storage Access")[0]) / 12), ((pricingData.get("Storage Access")[2]) / 12), ((pricingData.get("Storage Access")[4]) / 12)));
                 MULTIprice += min;
-                if (min === ((totalTB * pricingData.get("Storage Access")[0]) / 12)) {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[1] + "</li>";
+                if (min === ((pricingData.get("Storage Access")[0]) / 12)) {
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[1] + "</li>";
                 }
-                else if (min === ((totalTB * pricingData.get("Storage Access")[2]) / 12)) {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
+                else if (min === ((pricingData.get("Storage Access")[2]) / 12)) {
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[3] + "</li>";
                 }
                 else {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[5] + "</li>";
                 }
             }
             else if (storageAccess === "Once a quarter") {
-                AWSprice += ((totalTB * pricingData.get("Storage Access")[0]) / 4);
-                awsResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[1] + "</li>";
+                AWSprice += ((pricingData.get("Storage Access")[0]) / 4);
+                awsResult += "<li> Storage Access : " + pricingData.get("Storage Access")[1] + "</li>";
 
-                AZUREprice += ((totalTB * pricingData.get("Storage Access")[2]) / 4);
-                azureResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
+                AZUREprice += ((pricingData.get("Storage Access")[2]) / 4);
+                azureResult += "<li> Storage Access : " + pricingData.get("Storage Access")[3] + "</li>";
 
-                GCPprice += ((totalTB * pricingData.get("Storage Access")[4]) / 4);
-                gcpResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+                GCPprice += ((pricingData.get("Storage Access")[4]) / 4);
+                gcpResult += "<li> Storage Access : " + pricingData.get("Storage Access")[5] + "</li>";
 
-                min = (Math.min(((totalTB * pricingData.get("Storage Access")[0]) / 4), ((totalTB * pricingData.get("Storage Access")[2]) / 4), ((totalTB * pricingData.get("Storage Access")[4]) / 4)));
+                min = (Math.min(((pricingData.get("Storage Access")[0]) / 4), ((pricingData.get("Storage Access")[2]) / 4), ((pricingData.get("Storage Access")[4]) / 4)));
                 MULTIprice += min;
-                if (min === ((totalTB * pricingData.get("Storage Access")[0]) / 4)) {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[1] + "</li>";
+                if (min === ((pricingData.get("Storage Access")[0]) / 4)) {
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[1] + "</li>";
                 }
-                else if (min === ((totalTB * pricingData.get("Storage Access")[2]) / 4)) {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
+                else if (min === ((pricingData.get("Storage Access")[2]) / 4)) {
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[3] + "</li>";
                 }
                 else {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[5] + "</li>";
                 }
             }
             else { // Once a year
-                AWSprice += (totalTB * pricingData.get("Storage Access")[0]);
-                awsResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[1] + "</li>";
+                AWSprice += (pricingData.get("Storage Access")[0]);
+                awsResult += "<li> Storage Access : " + pricingData.get("Storage Access")[1] + "</li>";
 
-                AZUREprice += (totalTB * pricingData.get("Storage Access")[2]);
-                azureResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
+                AZUREprice += (pricingData.get("Storage Access")[2]);
+                azureResult += "<li> Storage Access : " + pricingData.get("Storage Access")[3] + "</li>";
 
-                GCPprice += (totalTB * pricingData.get("Storage Access")[4]);
-                gcpResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+                GCPprice += (pricingData.get("Storage Access")[4]);
+                gcpResult += "<li> Storage Access : " + pricingData.get("Storage Access")[5] + "</li>";
 
-                min = (Math.min(((totalTB * pricingData.get("Storage Access")[0])), ((totalTB * pricingData.get("Storage Access")[2])), ((totalTB * pricingData.get("Storage Access")[4]))));
+                min = (Math.min(((pricingData.get("Storage Access")[0])), ((pricingData.get("Storage Access")[2])), ((pricingData.get("Storage Access")[4]))));
                 MULTIprice += min;
-                if (min === ((totalTB * pricingData.get("Storage Access")[0]))) {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[1] + "</li>";
+                if (min === ((pricingData.get("Storage Access")[0]))) {
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[1] + "</li>";
                 }
-                else if (min === ((totalTB * pricingData.get("Storage Access")[2]))) {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[3] + "</li>";
+                else if (min === ((pricingData.get("Storage Access")[2]))) {
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[3] + "</li>";
                 }
                 else {
-                    multiResult += "<li> Storage Access Service Used: " + pricingData.get("Storage Access")[5] + "</li>";
+                    multiResult += "<li> Storage Access : " + pricingData.get("Storage Access")[5] + "</li>";
                 }
             }
 
             if (relationalDB) {
                 AWSprice += (totalTB * pricingData.get("Relational DB")[0]);
-                awsResult += "<li> Database Service Used: " + pricingData.get("Relational DB")[1] + "</li>";
+                awsResult += "<li> Relational Database : " + pricingData.get("Relational DB")[1] + "</li>";
 
                 AZUREprice += (totalTB * pricingData.get("Relational DB")[2]);
-                azureResult += "<li> Database Service Used: " + pricingData.get("Relational DB")[3] + "</li>";
+                azureResult += "<li> Relational Database : " + pricingData.get("Relational DB")[3] + "</li>";
 
                 GCPprice += (totalTB * pricingData.get("Relational DB")[4]);
-                gcpResult += "<li> Database Service Used: " + pricingData.get("Relational DB")[5] + "</li>";
+                gcpResult += "<li> Relational Database : " + pricingData.get("Relational DB")[5] + "</li>";
 
                 min = (Math.min((totalTB * pricingData.get("Relational DB")[0]), (totalTB * pricingData.get("Relational DB")[2]), (totalTB * pricingData.get("Relational DB")[4])));
                 MULTIprice += min;
                 if (min === (totalTB * pricingData.get("Relational DB")[0])) {
-                    multiResult += "<li> Database Service Used: " + pricingData.get("Relational DB")[1] + "</li>";
+                    multiResult += "<li> Relational Database : " + pricingData.get("Relational DB")[1] + "</li>";
                 }
                 else if (min === (totalTB * pricingData.get("Relational DB")[2])) {
-                    multiResult += "<li> Database Service Used: " + pricingData.get("Relational DB")[3] + "</li>";
+                    multiResult += "<li> Relational Database : " + pricingData.get("Relational DB")[3] + "</li>";
                 }
                 else {
-                    multiResult += "<li> Database Service Used: " + pricingData.get("Relational DB")[5] + "</li>";
+                    multiResult += "<li> Relational Database : " + pricingData.get("Relational DB")[5] + "</li>";
                 }
             }
             if (noSQLDB) {
                 AWSprice += (totalTB * pricingData.get("NoSQL DB")[0]);
-                awsResult += "<li> Database Service Used: " + pricingData.get("NoSQL DB")[1] + "</li>";
+                awsResult += "<li> NoSQL Database : " + pricingData.get("NoSQL DB")[1] + "</li>";
 
                 AZUREprice += (totalTB * pricingData.get("NoSQL DB")[2]);
-                azureResult += "<li> Database Service Used: " + pricingData.get("NoSQL DB")[3] + "</li>";
+                azureResult += "<li> NoSQL Database : " + pricingData.get("NoSQL DB")[3] + "</li>";
 
                 GCPprice += (totalTB * pricingData.get("NoSQL DB")[4]);
-                gcpResult += "<li> Database Service Used: " + pricingData.get("NoSQL DB")[5] + "</li>";
+                gcpResult += "<li> NoSQL Database : " + pricingData.get("NoSQL DB")[5] + "</li>";
 
                 min = (Math.min((totalTB * pricingData.get("NoSQL DB")[0]), (totalTB * pricingData.get("NoSQL DB")[2]), (totalTB * pricingData.get("NoSQL DB")[4])));
                 MULTIprice += min;
                 if (min === (totalTB * pricingData.get("NoSQL DB")[2])) {
-                    multiResult += "<li> Database Service Used: " + pricingData.get("NoSQL DB")[1] + "</li>";
+                    multiResult += "<li> NoSQL Database : " + pricingData.get("NoSQL DB")[1] + "</li>";
                 }
                 else if (min === (totalTB * pricingData.get("NoSQL DB")[2])) {
-                    multiResult += "<li> Database Service Used: " + pricingData.get("NoSQL DB")[3] + "</li>";
+                    multiResult += "<li> NoSQL Database : " + pricingData.get("NoSQL DB")[3] + "</li>";
                 }
                 else {
-                    multiResult += "<li> Database Service Used: " + pricingData.get("NoSQL DB")[5] + "</li>";
+                    multiResult += "<li> NoSQL Database : " + pricingData.get("NoSQL DB")[5] + "</li>";
                 }
             }
             if (inMemoryDB) {
                 AWSprice += (totalTB * pricingData.get("In-Memory DB")[0]);
-                awsResult += "<li> Database Service Used: " + pricingData.get("In-Memory DB")[1] + "</li>";
+                awsResult += "<li> In-Memory Database : " + pricingData.get("In-Memory DB")[1] + "</li>";
 
                 AZUREprice += (totalTB * pricingData.get("In-Memory DB")[2]);
-                azureResult += "<li> Database Service Used: " + pricingData.get("In-Memory DB")[3] + "</li>";
+                azureResult += "<li> In-Memory Database : " + pricingData.get("In-Memory DB")[3] + "</li>";
 
                 GCPprice += (totalTB * pricingData.get("In-Memory DB")[4]);
-                gcpResult += "<li> Database Service Used: " + pricingData.get("In-Memory DB")[5] + "</li>";
+                gcpResult += "<li> In-Memory Database : " + pricingData.get("In-Memory DB")[5] + "</li>";
 
                 min = (Math.min((totalTB * pricingData.get("In-Memory DB")[0]), (totalTB * pricingData.get("In-Memory DB")[2]), (totalTB * pricingData.get("In-Memory DB")[4])));
                 MULTIprice += min;
                 if (min === (totalTB * pricingData.get("In-Memory DB")[0])) {
-                    multiResult += "<li> Database Service Used: " + pricingData.get("In-Memory DB")[1] + "</li>";
+                    multiResult += "<li> In-Memory Database : " + pricingData.get("In-Memory DB")[1] + "</li>";
                 }
                 else if (min === (totalTB * pricingData.get("In-Memory DB")[2])) {
-                    multiResult += "<li> Database Service Used: " + pricingData.get("In-Memory DB")[3] + "</li>";
+                    multiResult += "<li> In-Memory Database : " + pricingData.get("In-Memory DB")[3] + "</li>";
                 }
                 else {
-                    multiResult += "<li> Database Service Used: " + pricingData.get("In-Memory DB")[5] + "</li>";
+                    multiResult += "<li> In-Memory Database : " + pricingData.get("In-Memory DB")[5] + "</li>";
                 }
             }
             if (bigDataClusterDB) {
                 AWSprice += (pricingData.get("Big Data Processing")[0]);
-                awsResult += "<li> Database Service Used: " + pricingData.get("Big Data Processing")[1] + "</li>";
+                awsResult += "<li> Big Data Processing : " + pricingData.get("Big Data Processing")[1] + "</li>";
 
                 AZUREprice += (pricingData.get("Big Data Processing")[2]);
-                azureResult += "<li> Database Service Used: " + pricingData.get("Big Data Processing")[3] + "</li>";
+                azureResult += "<li> Big Data Processing : " + pricingData.get("Big Data Processing")[3] + "</li>";
 
                 GCPprice += (pricingData.get("Big Data Processing")[4]);
-                gcpResult += "<li> Database Service Used: " + pricingData.get("Big Data Processing")[5] + "</li>";
+                gcpResult += "<li> Big Data Processing : " + pricingData.get("Big Data Processing")[5] + "</li>";
 
                 min = (Math.min((pricingData.get("Big Data Processing")[0]), (pricingData.get("Big Data Processing")[2]), (pricingData.get("Big Data Processing")[4])));
                 MULTIprice = min;
                 if (min === (totalTB * pricingData.get("Big Data Processing")[0])) {
-                    multiResult += "<li> Database Service Used: " + pricingData.get("Big Data Processing")[1] + "</li>";
+                    multiResult += "<li> Big Data Processing : " + pricingData.get("Big Data Processing")[1] + "</li>";
                 }
                 else if (min === (totalTB * pricingData.get("Big Data Processing")[2])) {
-                    multiResult += "<li> Database Service Used: " + pricingData.get("Big Data Processing")[3] + "</li>";
+                    multiResult += "<li> Big Data Processing : " + pricingData.get("Big Data Processing")[3] + "</li>";
                 }
                 else {
-                    multiResult += "<li> Database Service Used: " + pricingData.get("Big Data Processing")[5] + "</li>";
+                    multiResult += "<li> Big Data Processing : " + pricingData.get("Big Data Processing")[5] + "</li>";
                 }
             }
 
@@ -705,6 +713,7 @@
             awsPrice();
             azurePrice();
             gcpPrice();
+            $("#clicker").attr("disabled", true);
 
             if (latencyImportant >= costImportant) {
                 var leastLatency = Math.min(latencyData.get(country)[0], latencyData.get(country)[2], latencyData.get(country)[4]);
@@ -728,26 +737,31 @@
 
         function multiPrice() {
             console.log("Mutli-Cloud Price = " + MULTIprice);
-            mcBox.innerHTML = mcBox.innerHTML + "<strong> <center> Total Price: $" + MULTIprice.toFixed(2) + "<\strong>";
-            mcBox.innerHTML += "<strong>" + multiResult + "<\strong>";
+            mcBox.innerHTML = mcBox.innerHTML + "<strong> <center> Total Price: </strong><em>$" + MULTIprice.toFixed(2) + "<\em>\n";
+            mcBox.innerHTML += customerLoc + '\n\n'
+            mcBox.innerHTML += '<br><br>' + multiResult;
         }
 
         function awsPrice() {
             console.log("AWS Price = " + AWSprice);
-            awsBox.innerHTML = awsBox.innerHTML + "<strong> <center> Total Price: $" + AWSprice.toFixed(2) + "<\strong>";
-            awsBox.innerHTML += "<strong>" + awsResult + "<\strong>";
+            awsBox.innerHTML = awsBox.innerHTML + "<strong> <center> Total Price: </strong><em>$" + AWSprice.toFixed(2) + "<\em>\n";
+            awsBox.innerHTML += customerLoc + '\n\n'
+            awsBox.innerHTML += awsRegion + '\n\n'
+            awsBox.innerHTML += '<br><br>' + awsResult;
         }
 
         function azurePrice() {
             console.log("Azure Price = " + AZUREprice);
-            azureBox.innerHTML = azureBox.innerHTML + "<strong> <center> Total Price: $" + AZUREprice.toFixed(2) + "<\strong>";
-            azureBox.innerHTML += "<strong>" + azureResult + "<\strong>";
+            azureBox.innerHTML = azureBox.innerHTML + "<strong> <center> Total Price: </strong><em>$" + AZUREprice.toFixed(2) + "<\em>\n";
+            azureBox.innerHTML += customerLoc + '\n\n'
+            azureBox.innerHTML += '<br><br>' + azureResult;
         }
 
         function gcpPrice() {
             console.log("GCP Price = " + GCPprice);
-            gcpBox.innerHTML = gcpBox.innerHTML + "<strong> <center> Total Price: $" + GCPprice.toFixed(2) + "<\strong>";
-            gcpBox.innerHTML += "<strong>" + gcpResult + "<\strong>";
+            gcpBox.innerHTML = gcpBox.innerHTML + "<strong> <center> Total Price: </strong><em>$" + GCPprice.toFixed(2) + "<\em>\n";
+            gcpBox.innerHTML += customerLoc + '\n\n'
+            gcpBox.innerHTML += '<br><br>' + gcpResult;
         }
 
     </script>

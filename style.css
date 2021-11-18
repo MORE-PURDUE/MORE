@@ -45,12 +45,22 @@ body {
     margin-right: 2%;
 }
 
+#recommend_box {
+    margin-top: 80px;
+}
+
 .container {
     display: flex;
-    justify-content: space-around;
-    margin-top: 100px;
+    justify-content:flex-start;
+    margin-top: 30px;
+    margin-bottom: 200px;
+    width: auto;
 }
 
 #box {
     width: 500px;
+}
+
+.display-box{
+    width: 200px;
 }
