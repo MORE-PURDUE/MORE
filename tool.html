@@ -278,6 +278,7 @@
                         <p class="card-text" id="gcp"></p>
                     </div>
                 </div>
+
                 <div class="card display-box" style="width: 105rem;  margin-left: 1em; border-radius: 40px">
                     <img src="assets/aws-azure.png" class="card-img-top" style="height: 15rem" alt="...">
                     <div class="card-body">
@@ -285,6 +286,9 @@
                         <p class="card-text" id="aws_azure"></p>
                     </div>
                 </div>
+            </div>
+            <div class="container">
+
                 <div class="card display-box" style="width: 105rem;  margin-left: 1em; border-radius: 40px">
                     <img src="assets/aws-gcp.png" style="border-radius: 40px; height: 150px;" class="card-img-top"
                         style="height: 15rem" alt="...">
@@ -377,7 +381,7 @@
         var azureResult = "";
         var MULTIprice = 0;
         var multiResult = "";
-        
+
         var AwsAzure = "";
         var AwsAzureResult = "";
         var AwsGcp = "";
@@ -1026,7 +1030,7 @@
                 gcpResult += "<li> Big Data Processing : " + pricingData.get("Big Data Processing")[5] + "</li>";
 
                 min = (Math.min((pricingData.get("Big Data Processing")[0]), (pricingData.get("Big Data Processing")[2]), (pricingData.get("Big Data Processing")[4])));
-                MULTIprice = min;
+                MULTIprice += min;
                 if (min === (totalTB * pricingData.get("Big Data Processing")[0])) {
                     multiResult += "<li> Big Data Processing : " + pricingData.get("Big Data Processing")[1] + "</li>";
                 }
@@ -1133,7 +1137,7 @@
 
         function aws_azurePrice() {
             console.log("Aws + Azure = " + AwsAzure);
-            AwsAzureBox.innerHTML = AwsAzureBox.innerHTML + "<strong> <center> Total Price: </strong><em>$" + ((AWSprice+AZUREprice)/2) + "<\em>\n";
+            AwsAzureBox.innerHTML = AwsAzureBox.innerHTML + "<strong> <center> Total Price: </strong><em>$" + ((AWSprice + AZUREprice) / 2) + "<\em>\n";
             AwsAzureBox.innerHTML += customerLoc + '\n\n'
             AwsAzureBox.innerHTML += awsAzureRegion + '\n\n'
             AwsAzureBox.innerHTML += '<br><br>' + AwsAzureResult;
@@ -1141,7 +1145,7 @@
 
         function aws_gcpPrice() {
             console.log("Aws + Azure = " + AwsGcp);
-            AwsGcpBox.innerHTML = AwsGcpBox.innerHTML + "<strong> <center> Total Price: </strong><em>$" + ((AWSprice+GCPprice)/2) + "<\em>\n";
+            AwsGcpBox.innerHTML = AwsGcpBox.innerHTML + "<strong> <center> Total Price: </strong><em>$" + ((AWSprice + GCPprice) / 2) + "<\em>\n";
             AwsGcpBox.innerHTML += customerLoc + '\n\n'
             AwsGcpBox.innerHTML += awsGcpRegion + '\n\n'
             AwsGcpBox.innerHTML += '<br><br>' + AwsGcpResult;
@@ -1149,7 +1153,7 @@
 
         function azure_gcpPrice() {
             console.log("Aws + Azure = " + AzureGcp);
-            AzureGcpBox.innerHTML = AzureGcpBox.innerHTML + "<strong> <center> Total Price: </strong><em>$" + ((GCPprice+AZUREprice)/2) + "<\em>\n";
+            AzureGcpBox.innerHTML = AzureGcpBox.innerHTML + "<strong> <center> Total Price: </strong><em>$" + ((GCPprice + AZUREprice) / 2) + "<\em>\n";
             AzureGcpBox.innerHTML += customerLoc + '\n\n'
             AzureGcpBox.innerHTML += azureGcpRegion + '\n\n'
             AzureGcpBox.innerHTML += '<br><br>' + AzureGcpResult;
